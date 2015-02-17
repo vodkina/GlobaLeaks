@@ -27,7 +27,6 @@
                 <input type="checkbox" data-ng-model="accepted"/>
                 <span>I understand that Amnesty does not act on all information recieved nor can we guarantee your security.</span>
               </span>
-              {{accepted}}
               <span style="float: right; padding-top: 20px; padding-left: 30px">
                 <button class="btn SubmissionSubmitButton" data-ng-click="submit()"
                     data-ng-disabled="!accepted || uploading || submissionForm.$invalid || !receiver_selected" type="submit">

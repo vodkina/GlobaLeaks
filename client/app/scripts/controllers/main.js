@@ -99,7 +99,7 @@ GLClient.controller('MainCtrl', ['$scope', '$rootScope', '$http', '$route', '$ro
         }
 
         /* Feature implemented for amnesty and currently disabled */
-        //$scope.open_intro();
+        $scope.open_intro();
       }
     }
 

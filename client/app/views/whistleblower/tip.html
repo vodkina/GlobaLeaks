@@ -1,122 +1,44 @@
 <div class="row" data-ng-controller="TipCtrl">
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="col-md-12">
       <dl>
         <dt>
-          <span>{{tip.context_name}}</span>
-          <a data-ng-show="tip.context_description" popover="{{tip.context_description}}" popover-placement="right" popover-trigger="mouseenter">
-            <span class="glyphicon glyphicon-info-sign"></span>
-          </a>
+          <h1>Activity</h1>
+          <div>Created Submission: {{tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</span>
+          <div>Expires {{tip.expiration_date | date:'dd-MM-yyyy HH:mm'}}<span>
+          <div>{{tip.context_name}}</div>
         </dt>
-        <br />
-        <dt><span data-translate>Submission date</span></dt>
-        <dd>{{tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</dd>
-        <br />
-        <dt><span data-translate>Expiration Date</span></dt>
-        <dd>{{tip.expiration_date | date:'dd-MM-yyyy HH:mm'}}</dd>
       </dl>
-     <div data-ng-repeat="step in tip.wb_steps">
-       <dt>
-         <span data-translate>Step</span>
-         <span>{{$index + 1}}: {{step.label}}</span>
-       </dt>
-       <dd data-ng-include="'views/partials/tip_fields.html'"></dd>
-     </div>
+      <div data-ng-if="tip.wb_steps[0]['children'][1]['value']">
+        <div class="row">
+          <div class="pull-right" style="margin-right:20px">
+            <div><strong>Whistleblower</strong></div>
+            <div>{{tip.creation_date | date:'dd-MM-yyyy | HH:mm'}}</div>
+            <div style="position:relative; top: 10px; float: right"><img title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAUCAYAAADskT9PAAABQElEQVRIDbWVPQ7CMAyFnQ5wBjbUK9AOiIXLUA4ES3sEJO7AghB/d+jGGWBosCuMoI2TJtBIkVvH8XuqP6kAP6zjUS9p/9ACVOjl/V5Ph0PY0f37HeazmTqE9AoycLnoEYpdcVOkdcM9SRJF0WtFXtVYvNnoQVXBFh9ZnFqMKEdn9OKzvA3EMayjCKZNEcrRWTPvevcy8AJuYWm68IWyMwMf0Lk+88MHyk4GDNBZPkJ91BlK5wgE6FwGOkPpNDAew8oEncsB3aG7rjrrCM5nnSkFuauJ7VxrWKapKqQa0YAHdFJvzluhNBoIgI7FpChC2WIgEDpJmPMilC0DBE4IdKwkRQnKrxH8AzrJAOebUL4N/BE61pLiF5S1gR6gk8Q5/4ZSEXQ4910fc2c1U8Tf96EsYa5OJ52jeGYq6juHJoonDCSFVgQCr3oAAAAASUVORK5CYII=" /></div>
+          </div>
+        </div>
+        <div class="CommentWhistleblower preformatted">{{tip.wb_steps[0]['children'][1]['value']}}</div>
+      </div>
+      <div data-ng-include="'views/partials/tip_communication.html'"></div>
     </div>
   </div>
 
-  <div class="col-md-6">
-    <div class="col-md-12">
-      <h3 data-translate>Receiver List</h3>
-      <table class="table table-striped" id="receiverList">
-        <thead>
-          <tr>
-            <th><span data-translate>Name</span></th>
-            <th><span data-translate>Description</span></th>
-            <th><span data-translate>Access counter</span></th>
-          </tr>
-        </thead>
-        <tbody id="receiverListBody">
-          <tr data-ng-repeat="receiver in tip.receivers | filter:filterReceivers | orderBy:'name'">
-            <td>
-              <span data-ng-switch="" on="receiver.gpg_key_status">
-                <span data-ng-switch-when="enabled">
-                  <i class="glyphicon glyphicon-certificate" popover="{{'This receiver has configured the encryption key.' | translate}}" popover-placement="right" popover-trigger="mouseenter"></i>
-                </span>
-                <span data-ng-switch-when="disabled">
-                  <i class="glyphicon glyphicon-warning-sign" popover="{{'This receiver has not configured the encryption key.' | translate}}" popover-placement="right" popover-trigger="mouseenter"></i>
-                </span>
-              </span>
-              <span>{{receiver.name}}</span>
-            </td>
-            <td>{{receiver.description}}</td>
-            <td>{{receiver.access_counter}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="col-md-offset-2 col-md-5 uploadedFiles" data-ng-init="fileupload_mode == 'multiple'">
+    <div class="row">
+      <label data-translate>Files</label>
     </div>
-
-  </div>
-</div>
-
-<hr />
-
-<div class="row">
-  <div class="col-md-12">
-    <h3>
-      <span data-translate>Files</span>
-    </h3>
-    <div class="well" data-ng-show="tip.files">
-      <div class="table-container">
-        <table class="table table-striped" id="fileList">
-          <thead>
-            <tr>
-              <th>
-                <span data-translate>Filename</span>
-              </th>
-              <th>
-                <span data-translate>Upload Date</span>
-              </th>
-              <th>
-                <span data-translate>Content Type</span>
-              </th>
-              <th>
-                <span data-translate>File Size</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody id="fileListBody" data-ng-repeat="file in tip.files">
-            <tr>
-              <td>
-                <span>{{file.name}}</span>
-              </td>
-              <td>
-                <span>{{file.creation_date | date:'dd-MM-yyyy'}}</span>
-              </td>
-              <td>
-                <span>{{file.content_type}}<span>
-              </td>
-              <td>
-                <span>{{file.size}}</span>
-                <span>Bytes</span>
-                <!-- To be fixed properly managing translation and unit change bytes/mbytes/etc -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="uploadingBox" data-ng-show="tip.files">
+      <div data-ng-include="'views/partials/uploaded_files.html'"></div>
+    </div>
+    <div data-ng-form="" id="fileupload" action="" method="POST" enctype="multipart/form-data" data-ng-app="GLClient.fileuploader" data-ng-controller="WBFileUploadCtrl" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+      <div class="row fileupload-buttonbar">
+        <div class="col-md-7">
+          <div class="fileinput-button" data-ng-class="{disabled: disabled || (fileupload_mode == 'single' && queue.length)}">
+            <span style="color: blue" data-translate> + Add more files</span>
+            <input type="file" name="files[]" data-ng-disabled="disabled" multiple />
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-12" data-ng-hide="tip.files">
-    <p>
-      <span data-translate>No files have been uploaded!</span>
-    </p>
-  </div>
-  <div class="col-md-12">
-    <div data-ng-init="fileupload_mode = 'multiple'" data-ng-include="'views/partials/fileupload.html'"></div>
-  </div>
 </div>
-
-<hr />
-
-<div data-ng-include="'views/partials/tip_communication.html'"></div>
