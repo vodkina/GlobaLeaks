@@ -8,6 +8,15 @@
       <div class="col-md-offset-1 col-md-7">
         <strong>{{file.name}} ({{file.size}})</strong><br />
         {{file.creation_date | date:'dd-MM-yyyy'}}
+        <div>
+          <form id="fileDownload" method="POST" action="{{file.href}}" novalidate>
+            <input type="hidden" name="x-session" value="{{session}}">
+            <input type="hidden" name="xsrf-token" value="{{xsrf_token}}">
+            <button class="linkButton">
+              <span data-translate>download</span>
+           </button>
+         </form>
+       </div>
       </div>
     </div>
   </div>

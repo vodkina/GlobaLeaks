@@ -300,3 +300,13 @@ input, textarea, select {
 .nested {
   padding-left: 15px;
 }
+
+.linkButton {
+ background: none;
+ border: none;
+ color: #0066ff;
+ text-decoration: underline;
+ cursor: pointer;
+ padding: 0;
+ margin: 0;
+}

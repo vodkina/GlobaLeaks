@@ -30,15 +30,5 @@
     <div class="uploadingBox" data-ng-show="tip.files">
       <div data-ng-include="'views/partials/uploaded_files.html'"></div>
     </div>
-    <div data-ng-form="" id="fileupload" action="" method="POST" enctype="multipart/form-data" data-ng-app="GLClient.fileuploader" data-ng-controller="WBFileUploadCtrl" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
-      <div class="row fileupload-buttonbar">
-        <div class="col-md-7">
-          <div class="fileinput-button" data-ng-class="{disabled: disabled || (fileupload_mode == 'single' && queue.length)}">
-            <span style="color: blue" data-translate> + Add more files</span>
-            <input type="file" name="files[]" data-ng-disabled="disabled" multiple />
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
