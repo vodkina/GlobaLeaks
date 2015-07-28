@@ -51,7 +51,8 @@
   </div>
 </div>
 
-<div class="row" data-ng-if="!node.disable_encryption_warning && preferences.pgp_key_status !== 'enabled'">
+<div class="row" data-ng-if="false === true && !node.disable_encryption_warning && preferences.pgp_key_status !== 'enabled'">
+<div data-ng-show="false == true" class="row" data-ng-show="preferences.pgp_key_status != 'enabled'">
   <div class="col-md-12">
     <div class="alert alert-warning">
       <i class="glyphicon glyphicon-warning-sign"></i>
@@ -62,7 +63,7 @@
     </div>
   </div>
 </div>
-<div class="row" data-ng-if="!node.disable_encryption_warning && tip_unencrypted">
+<div class="row" data-ng-if="false === true && !node.disable_encryption_warning && tip_unencrypted">
   <div class="col-md-12">
     <div class="alert alert-warning">
       <i class="glyphicon glyphicon-warning-sign"></i>
@@ -84,8 +85,9 @@
   <div class="col-md-6">
     <div data-ng-include="'views/partials/tip_questionnaire_answers.html'"></div>
   </div>
-  <div class="col-md-6" data-ng-if="tip.enable_whistleblower_identity">
-    <div data-ng-include="'views/receiver/whistleblower_identity.html'"></div>
+  <div class="col-md-6">
+    <div data-ng-include="'views/submission/tip_status.html'"></div>
+    <div data-ng-if="tip.enable_whistleblower_identity" data-ng-include="'views/receiver/whistleblower_identity.html'"></div>
   </div>
 </div>
 

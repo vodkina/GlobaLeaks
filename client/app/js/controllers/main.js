@@ -10,6 +10,15 @@ GLClient.controller('MainCtrl', ['$q', '$scope', '$rootScope', '$http', '$route'
     $scope.app_stylesheet = 'css/styles.css';
 
     $rootScope.language = $location.search().lang;
+    $rootScope.workflow = 1;
+
+    $rootScope.increaseWorkflow = function() {
+      $rootScope.workflow += 1;
+    }
+
+    $rootScope.decreaseWorkflow = function() {
+      $rootScope.workflow -= 1;
+    }
 
     $rootScope.embedded = $location.search().embedded === 'true' ? true : false;
 
