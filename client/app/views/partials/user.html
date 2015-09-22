@@ -14,9 +14,7 @@
     </div>
     <div data-ng-show="showLoginForm() && !session_id" class="pull-right">
       <div>
-        <span data-translate>Already shared info? Use your</span>
-        <a href=""><span data-translate>reference</span></a>
-        <span data-translate>below</span>
+        <span>{{language == "en" ? "Have you already filed a submission? Enter your key code." : "ﻪﻟ ﺲﺒﻗ ﻭ ﻊﻣّﺮﺗ ﺖﻗﺪﻴﻣﺍ؟ ﺃﺪﺨﻟ ﺮﻣﺯ ﺎﻠﻤﻔﺗﺎﺣ ﺎﻠﺧﺎﺻّ ﺐﻛ.";}}</span>
       </div>
       <div data-ng-include="'views/partials/wb_login.html'"></div>
     </div>

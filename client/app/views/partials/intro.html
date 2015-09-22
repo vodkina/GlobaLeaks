@@ -7,8 +7,8 @@
       <div>&nbsp;</div>
     </div>
     <div class="modal-body IntroBoxBody">
-      <div class="IntroModalTitle" data-translate>Select Language</div>
-      <div data-translate>Please select which language you wish to use.</div>
+      <div class="IntroModalTitle" data-translate>{{language == "en" ? "Select Language" : "اختر اللغة";}}</div>
+      <div data-translate>{{language == "en" ? "Please select which language you wish to use." : "يرجى تحديد اللغة التي ترغب في استخدامها.";}}</div>
       <br />
       <div id="LanguagePreselectorBox" class="row">
         <span class="LanguagePreselectorBoxElem" data-ng-class="{LanguageSelected: data.language == 'en', LanguageDeselected: data.language != 'en'}" data-ng-click="data.language='en'">
@@ -34,7 +34,7 @@
     <div class="modal-footer">
       <div class="pull-right">
         <button class="btn btn-default actionButton" data-ng-click="proceed()">
-          <span data-translate>Proceed</span>
+          <span>{{language == "en" ? "Proceed" : "مواصلة";}}</span>
         </button>
       </div>
     </div>
@@ -53,11 +53,11 @@
     </div>
     <div class="modal-footer">
       <div class="pull-left">
-        <a data-ng-click="back()" data-translate>back</a>
+        <a data-ng-click="back()">{{language == "en" ? "back" : "وراء";}}</a>
       </div>
       <div class="pull-right">
         <button class="btn btn-default actionButton" data-ng-click="proceed()">
-          <span data-translate>Next</span>
+          <span>{{language == "en" ? "Next" : "الخطوة القادمة";}}</span>
         </button>
       </div>
     </div>
@@ -75,11 +75,11 @@
     </div>
     <div class="modal-footer">
       <div class="pull-left">
-        <a data-ng-click="back()" data-translate>back</a>
+        <a data-ng-click="back()">{{language == "en" ? "back" : "وراء";}}</a>
       </div>
       <div class="pull-right">
         <button class="btn btn-default actionButton" data-ng-click="cancel()">
-          <span data-translate>Proceed</span>
+          <span data-translate>{{language == "en" ? "Proceed" : "ﻡﻭﺎﺼﻟﺓ";}}</span>
         </button>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <form name="wbLoginForm" novalidate>
   <div class="form-group">
     <div class="input-group">
-      <input class="form-control keyinput" type="text" placeholder="16 Digit Reference Number" maxlength="19" data-ng-model="formatted_keycode" name="keycode" keycodevalidator>
+      <input class="form-control keyinput" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" data-ng-model="formatted_keycode" name="keycode" keycodevalidator>
       <span class="keybutton" style="margin-left: 15px">
         <button data-ng-click="view_tip(formatted_keycode)" class="btn"
                 data-ng-disabled="wbLoginForm.keycode.$error.keycodevalidator" type="submit">

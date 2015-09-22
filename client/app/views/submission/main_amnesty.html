@@ -25,7 +25,7 @@
             <div>
               <span style="float: left; width: 60%">
                 <input type="checkbox" data-ng-model="accepted"/>
-                <span>I understand that Amnesty does not act on all information recieved nor can we guarantee your security.</span>
+                <span>{{language == 'en' ? 'I understand that Amnesty does not act on all information recieved nor can we guarantee your security.' : 'أتفهم أن هناك مجازفة في إرسال هذه المعلومات وأن منظمة العفو لن تستخدمها كلها';}}</span>
               </span>
               <span style="float: right; padding-top: 20px; padding-left: 30px">
                 <button class="btn SubmissionSubmitButton" data-ng-click="submit()"
