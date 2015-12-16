@@ -296,7 +296,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="form-group" data-ng-if="editable && (field.instance !== 'reference' && fields.length > 0)">
+            <div class="form-group" data-ng-if="(field.instance !== 'reference' && fields.length > 0)">
               <div class="editorTitle" data-translate>Configured questions:</div>
               <div class="configuredFields">
                 <div data-ng-repeat="field in fields | orderBy:['y', 'x']">
