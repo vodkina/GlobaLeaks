@@ -5,6 +5,7 @@ GLClient.controller('StatusCtrl',
 
     $scope.tip_id = $routeParams.tip_id;
     $scope.session = Authentication.id;
+    $scope.role = Authentication.role;
     $scope.xsrf_token = $.cookie('XSRF-TOKEN');
     $scope.target_file = '#';
 
