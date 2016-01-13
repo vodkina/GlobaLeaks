@@ -200,9 +200,11 @@ GLClient.controller('MainCtrl', ['$scope', '$rootScope', '$http', '$route', '$ro
         if (_.indexOf(["ar", "he", "ur"], newVal) !== -1) {
           $scope.rtl = true;
           $scope.build_stylesheet = "/styles-rtl.css";
+          document.getElementsByTagName("html")[0].setAttribute('dir', 'rtl');
         } else {
           $scope.rtl = false;
           $scope.build_stylesheet = "/styles.css";
+          document.getElementsByTagName("html")[0].setAttribute('dir', 'ltr');
         }
 
         $rootScope.$broadcast("REFRESH");
