@@ -427,3 +427,78 @@ table {
   height: 100%;
   vertical-align: middle;
 }
+
+#HeaderBox, #HeaderBoxHomepage {
+  background-color: #FFF;
+  border-bottom: 1px solid #8a8680;
+}
+
+#PageSubtitle, #PageTitle, #PageTitleHomepage, #HeaderBox, #HeaderHomepage, #PageSubtitleHomepage {
+  color: #3F3F3F;
+}
+
+#LogoBox img {
+  height: 10em;
+  width: auto;
+}
+
+#titleboxdefault {
+  display: none;
+}
+
+#titleboxoneline #PageSubtitle, #titleboxoneline #PageTitleWithSubtitle {
+  font-size: 2em;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'CheltenhamITC';
+  src: url('inlinefiles/font1.eot'); /* IE9 Compat Modes */
+  src: url('inlinefiles/font1.woff') format('woff'), /* Pretty Modern Browsers */
+       url('inlinefiles/font2.svg')  format('truetype'), /* Safari, Android, iOS */
+       url('inlinefiles/font2.svg') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'Frutiger';
+  src: url('inlinefiles/font1.eot'); /* IE9 Compat Modes */
+  src: url('inlinefiles/font1.woff') format('woff'), /* Pretty Modern Browsers */
+       url('inlinefiles/font1.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('inlinefiles/font1.svg') format('svg'); /* Legacy iOS */
+}
+
+body, * {
+  font-family : "Frutiger";
+}
+
+h1, h2, h3, h4, h5,
+#PageSubtitle, #PageTitle, #PageTitleHomepage, #HeaderBox, #HeaderHomepage, #PageSubtitleHomepage,
+#NodeIntroPresentation {
+  font-family : "CheltenhamITC";
+  color: #9B8A78;
+  font-weight: bold;
+}
+
+#WhistleblowerSubmitBoxHeader {
+  margin: 0 auto;
+  width: 70%;
+  font-size: 14em;
+  text-align: justify;
+}
+
+#HomePageBoxImg img {
+  height: 15em;
+}
+
+#FooterBox {
+  color: #3F3F3F;
+  background-color: #F1EFEF;
+  border-top: 1px solid #8a8680;
+  clear: both;
+}
+
+.verticalAlignHelper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
