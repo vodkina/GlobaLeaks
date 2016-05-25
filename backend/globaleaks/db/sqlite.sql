@@ -2,7 +2,6 @@ PRAGMA foreign_keys = ON;
 PRAGMA auto_vacuum = FULL;
 
 CREATE TABLE config (
-    id TEXT NOT NULL,
     key TEXT NOT NULL,
     type TEXT NOT NULL CHECK (TYPE IN ('int',
                                        'bool',
@@ -10,19 +9,16 @@ CREATE TABLE config (
     status INTEGER DEFAULT 0,
     value TEXT NOT NULL,
     default TEXT NOT NULL,
-    UNIQUE (key),
-    PRIMARY KEY (id)
+    PRIMARY KEY (key)
 );
 
 CREATE TABLE config_l10n (
-    id TEXT NOT NULL,
     key TEXT NOT NULL,
     lang TEXT NOT NULL,
     status INTEGER DEFAULT 0,
     value TEXT NOT NULL,
     default TEXT NOT NULL,
-    UNIQUE (key, lang),
-    PRIMARY KEY (id)
+    PRIMARY KEY (key, lang)
 );
 
 CREATE TABLE user (

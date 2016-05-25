@@ -156,26 +156,27 @@ class Model(BaseModel):
         return store.find(cls, cls.id == obj_id).one()
 
 
-class Config(Model):
+class Config(BaseModel):
     """
     Table containing the global configuration
     """
     key = Unicode(validator=shorttext_v)
-    lang = Unicode(validator=shorttext_v)
+    type = Unicode(validator=shorttext_v)
     status = Int(default = 0)
-    value = Unicode(validator=shorttext_v)
-    default = Unicode(validator=shorttext_v)
+    value = Unicode()
+    default = Unicode()
 
 
-class Config_L10N(Model):
+class Config_L10N(BaseModel):
     """
     Internationalization table for Config table
     """
-    name = Unicode(validator=shorttext_v)
+    key = Unicode(validator=shorttext_v)
+    lang = Unicode(validator=shorttext_v)
     type = Unicode(validator=shorttext_v)
     status = Int(default = 0)
-    value = Unicode(validator=shorttext_v)
-    default = Unicode(validator=shorttext_v)
+    value = Unicode()
+    default = Unicode()
 
 
 class User(Model):
