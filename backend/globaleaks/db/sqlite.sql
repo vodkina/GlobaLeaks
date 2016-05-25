@@ -1,6 +1,28 @@
 PRAGMA foreign_keys = ON;
 PRAGMA auto_vacuum = FULL;
 
+CREATE TABLE config (
+    id TEXT NOT NULL,
+    key TEXT NOT NULL,
+    type TEXT NOT NULL CHECK (TYPE IN ('int',
+                                       'bool',
+                                       'unicode')),
+    status INTEGER DEFAULT 0,
+    value TEXT NOT NULL,
+    UNIQUE (key),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE config_l10n (
+    id TEXT NOT NULL,
+    key TEXT NOT NULL,
+    lang TEXT NOT NULL,
+    status INTEGER DEFAULT 0,
+    value TEXT NOT NULL,
+    UNIQUE (key, lang),
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE user (
     id TEXT NOT NULL,
     creation_date TEXT NOT NULL,

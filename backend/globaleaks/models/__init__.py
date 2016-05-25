@@ -156,6 +156,26 @@ class Model(BaseModel):
         return store.find(cls, cls.id == obj_id).one()
 
 
+class Config(Model):
+    """
+    Table containing the global configuration
+    """
+    key = Unicode(validator=shorttext_v)
+    lang = Unicode(validator=shorttext_v)
+    status = Int(default = 0)
+    value = Unicode(validator=shorttext_v)
+
+
+class Config_L10N(Model):
+    """
+    Internationalization table for Config table
+    """
+    name = Unicode(validator=shorttext_v)
+    type = Unicode(validator=shorttext_v)
+    status = Int(default = 0)
+    value = Unicode(validator=shorttext_v)
+
+
 class User(Model):
     """
     This model keeps track of globaleaks users.
