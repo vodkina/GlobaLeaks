@@ -9,6 +9,7 @@ CREATE TABLE config (
                                        'unicode')),
     status INTEGER DEFAULT 0,
     value TEXT NOT NULL,
+    default TEXT NOT NULL,
     UNIQUE (key),
     PRIMARY KEY (id)
 );
@@ -19,6 +20,7 @@ CREATE TABLE config_l10n (
     lang TEXT NOT NULL,
     status INTEGER DEFAULT 0,
     value TEXT NOT NULL,
+    default TEXT NOT NULL,
     UNIQUE (key, lang),
     PRIMARY KEY (id)
 );

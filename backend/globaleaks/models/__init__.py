@@ -164,6 +164,7 @@ class Config(Model):
     lang = Unicode(validator=shorttext_v)
     status = Int(default = 0)
     value = Unicode(validator=shorttext_v)
+    default = Unicode(validator=shorttext_v)
 
 
 class Config_L10N(Model):
@@ -174,6 +175,7 @@ class Config_L10N(Model):
     type = Unicode(validator=shorttext_v)
     status = Int(default = 0)
     value = Unicode(validator=shorttext_v)
+    default = Unicode(validator=shorttext_v)
 
 
 class User(Model):
