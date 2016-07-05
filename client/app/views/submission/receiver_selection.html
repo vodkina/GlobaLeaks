@@ -1,7 +1,9 @@
 <div id="SubmissionStepReceiver" class="receiverCards">
   <div id="StepTitle" data-ng-if="!show_steps_navigation_bar" data-translate>Recipient selection</div>
   <div id="ReceiverSelectionBox">
-    <div class="stepDescription">{{submission.context.recipients_clarification}}</div>
+    <div data-ng-if="(submission.receivers | filter:filterReceiversDefault).length > 0">
+      <div class="stepDescription">{{submission.context.recipients_clarification}}</div>
+    </div>
     <div data-ng-repeat="receiver in submission.receivers | filter:filterReceivers | orderBy:receiversOrderPredicate" data-ng-if="receiver.configuration !== 'forcefully_selected'" id="receiver-{{$index}}" data-ng-class="{'col-md-6': !submission.context.show_small_receiver_cards, 'col-md-3': submission.context.show_small_receiver_cards}" data-ng-click="switch_selection(receiver)">
       <div class="receiverCard" data-ng-class="{'selected': submission.receivers_selected[receiver.id] && receiver.configuration !== 'forcefully_selected', 'forcefullySelected': receiver.configuration === 'forcefully_selected', 'disabled': receiver.configuration === 'unselectable' || (!node.allow_unencrypted && receiver.pgp_key_status === 'disabled')}">
         <div class="receiverCardTitle row">
@@ -47,9 +49,9 @@
   </div>
   <div style="clear:both"><br /><br /></div>
   <div id="ReceiverSelectionBox">
-    <div data-ng-if="GLTranslate.indirect.appLanguage === 'de'" class="stepDescription">Ihr Hinweis wird an die Mitglieder des Corporate Compliance Committees übermittelt. Dieses Gremium trägt die Gesamtverantwortung für das Compliance Management der Oetker-Gruppe. Diese Empfänger sind nicht abwählbar:</div>
-    <div data-ng-if="GLTranslate.indirect.appLanguage === 'en'" class="stepDescription">The members of the Corporate Compliance Committee will receive your submission. This body is in charge for the compliance management throughout the Oetker-Group. These receivers are not deselectable:</div>
-    <div data-ng-repeat="receiver in submission.receivers | orderBy:receiversOrderPredicate" id="receiver-{{$index}}" data-ng-class="{'col-md-6': !submission.context.show_small_receiver_cards, 'col-md-3': submission.context.show_small_receiver_cards}" data-ng-click="switch_selection(receiver)">
+    <div data-ng-if="GLTranslate.indirect.appLanguage === 'de'" class="stepDescription">Ihr Hinweis wird ebenfalls an die gesamtverantwortlichen Leiter der Compliance Organisation übermittelt. Diese Empfänger sind nicht abwählbar:</div>
+    <div data-ng-if="GLTranslate.indirect.appLanguage === 'en'" class="stepDescription">The managers in charge of the Compliance Organisation will also receive your submission. These receivers are not deselectable:</div>
+    <div data-ng-repeat="receiver in submission.receivers | orderBy:receiversOrderPredicate" id="receiver-{{$index}}" data-ng-if="receiver.configuration === 'forcefully_selected'" data-ng-class="{'col-md-6': !submission.context.show_small_receiver_cards, 'col-md-3': submission.context.show_small_receiver_cards}" data-ng-click="switch_selection(receiver)">
       <div class="receiverCard" data-ng-class="{'selected': submission.receivers_selected[receiver.id] && receiver.configuration !== 'forcefully_selected', 'forcefullySelected': receiver.configuration === 'forcefully_selected', 'disabled': receiver.configuration === 'unselectable' || (!node.allow_unencrypted && receiver.pgp_key_public === '')}">
         <div class="receiverCardTitle row">
           <div class="col-md-10">

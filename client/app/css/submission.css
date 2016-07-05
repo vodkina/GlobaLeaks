@@ -184,3 +184,7 @@
 #creditCard {
   width: 20em;
 }
+
+.forcefullySelected {
+  background-color: #99ccff;
+}

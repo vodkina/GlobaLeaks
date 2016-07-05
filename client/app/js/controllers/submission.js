@@ -100,6 +100,18 @@ GLClient.controller('SubmissionCtrl',
     }
   };
 
+  $scope.afilterReceivers = function(receiver) {
+    return receiver.configuration !== 'hidden';
+  };
+
+  $scope.filterReceiversForcefullySelected = function(receiver) {
+    return receiver.configuration === 'forcefully_selected';
+  };
+
+  $scope.filterReceiversDefault = function(receiver) {
+    return receiver.configuration === 'default';
+  };
+
   $scope.getCurrentStepIndex = function() {
     return $scope.selection;
   };
