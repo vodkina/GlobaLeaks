@@ -41,7 +41,7 @@ angular.module('GLFilters', []).
       } 
     };
   }]).
-  filter('wbAccessRevoked', function() {
+  filter('wbAccessRevoked', ['Utils', function(Utils) {
     return function(wb_last_access, wbtip_timetolive) {
       if (angular.isUndefined(wb_last_access)) {
         return undefined;
@@ -52,15 +52,15 @@ angular.module('GLFilters', []).
 
       return Utils.dateFormat(revokeDate);
     };
-  })
-  .filter('dateFmt', ['Utils', function(Util) {
+  }])
+  .filter('dateFmt', ['Utils', function(Utils) {
     return function(date) {
-      return Util.dateFormat(date);
+      return Utils.dateFormat(date);
     };
   }])
-  .filter('dateTimeFmt', ['Utils', function(Util) {
+  .filter('dateTimeFmt', ['Utils', function(Utils) {
     return function(date) {
-      return Util.dateTimeFormat(date);
+      return Utils.dateTimeFormat(date);
     };
   }])
 
