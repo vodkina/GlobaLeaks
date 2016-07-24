@@ -217,7 +217,7 @@
                          data-ng-click="open_min_date = !open_min_date">
                       <label data-translate>Earliest selectable date</label>:
                       <span data-ng-show="field.attrs.min_date.value !== ''">
-                        <span>{{field.attrs.min_date.value | date:'dd-MM-yyyy Z'}}</span>
+                        <span>{{field.attrs.min_date.value | glDateFmt}}</span>
                         <button class="actionButton btn btn-xs btn-danger"
                                 data-ng-click="field.attrs.min_date.value = ''; $event.stopPropagation();">
                           <span class="glyphicon glyphicon-remove"></span>
@@ -234,7 +234,7 @@
                          data-ng-click="open_max_date = !open_max_date">
                       <label data-translate>Latest selectable date</label>:
                       <span data-ng-show="field.attrs.max_date.value !== ''">
-                        <span>{{field.attrs.max_date.value | date:'dd-MM-yyyy Z'}}</span>
+                        <span>{{field.attrs.max_date.value | glDateFmt}}</span>
                         <button class="actionButton btn btn-xs btn-danger"
                                 data-ng-click="field.attrs.max_date.value = ''; $event.stopPropagation();">
                           <span class="glyphicon glyphicon-remove"></span>

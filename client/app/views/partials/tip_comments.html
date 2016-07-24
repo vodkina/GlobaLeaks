@@ -49,7 +49,7 @@
               <div class="WbNameInMessages" data-translate>Whistleblower</div>
             </div>
             <div class="pull-right" style="margin-right:20px">
-              <div>{{::comment.creation_date | date:'dd-MM-yyyy HH:mm Z'}}</div>
+              <div>{{::comment.creation_date | glDateTimeFmt}}</div>
             </div>
           </div>
           <div class="preformatted">{{::comment.content}}</div>
@@ -60,7 +60,7 @@
               <div class="ReceiverNameInMessages">{{::comment.author}}</div>
             </div>
             <div class="pull-right" style="margin-right:20px">
-              <div>{{::comment.creation_date | date:'dd-MM-yyyy HH:mm Z'}}</div>
+              <div>{{::comment.creation_date | glDateTimeFmt}}</div>
             </div>
           </div>
           <div class="preformatted">{{::comment.content}}</div>

@@ -22,7 +22,7 @@
     </div>
   </span>
 
-  <span data-ng-switch-when="date">{{entry['value'] | date:'dd-MM-yyyy Z'}}</span>
+  <span data-ng-switch-when="date">{{entry['value'] | glDateTimeFmt}}</span>
 
   <span data-ng-switch-when="tos">
     <span data-ng-if="entry['value'] == 'True'" data-translate>Accepted</span>
