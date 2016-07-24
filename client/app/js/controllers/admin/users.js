@@ -34,8 +34,8 @@ GLClient.controller('AdminUsersCtrl', ['$scope', '$uibModal', 'AdminUserResource
     );
   };
 }]).
-controller('AdminUserEditorCtrl', ['$scope', 'CONSTANTS',
-  function($scope, CONSTANTS) {
+controller('AdminUserEditorCtrl', ['$scope',
+  function($scope) {
 
     $scope.editing = false;
 
