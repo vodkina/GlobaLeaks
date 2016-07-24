@@ -793,7 +793,6 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
       user.pgp_key_expiration = '';
       user.pgp_key_status = 'ignored';
       user.language = 'en';
-      user.timezone = 0;
       return user;
     },
 

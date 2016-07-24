@@ -47,8 +47,6 @@ controller('AdminUserEditorCtrl', ['$scope', 'CONSTANTS',
       $scope.save_user($scope.user, false);
     };
 
-    $scope.timezones = CONSTANTS.timezones;
-
     $scope.updateUserImgUrl = function() {
       $scope.userImgUrl = '/admin/users/' + $scope.user.id + '/img#' + $scope.Utils.randomFluff();
     };

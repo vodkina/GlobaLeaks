@@ -29,7 +29,7 @@
       <tbody>
         <tr data-ng-repeat="activity in activities | orderBy:sortKey:sortReverse">
           <td>{{activity.id}}</td>
-          <td>{{activity.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
+          <td>{{activity.creation_date | date:'dd-MM-yyyy HH:mm Z'}}</td>
           <td>{{activity.event}}</td>
           <td>{{activity.duration}}</td>
         </tr>

@@ -70,9 +70,9 @@
         <tr>
           <td id="tipFileName" data-ng-if="::session.role == 'receiver'">{{::tip | tipFileName }}</td>
           <td>{{::tip.context_name}}</td>
-          <td>{{::tip.creation_date | date:'dd-MM-yyyy HH:mm'}}</td>
-          <td>{{::tip.update_date | date:'dd-MM-yyyy HH:mm'}}</td>
-          <td>{{::tip.expiration_date | date:'dd-MM-yyyy HH:mm'}}</td>
+          <td>{{::tip.creation_date | date:'dd-MM-yyyy HH:mm Z'}}</td>
+          <td>{{::tip.update_date | date:'dd-MM-yyyy HH:mm Z'}}</td>
+          <td>{{::tip.expiration_date | date:'dd-MM-yyyy HH:mm Z'}}</td>
           <td data-ng-if="::session.role == 'receiver'">
             <span data-ng-if="!tip.wb_access_revoked"
               uib-popover="{{'Unless the whistleblower checks the submission by this time, their access to it will expire.' | translate}}"

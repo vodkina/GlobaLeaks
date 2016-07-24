@@ -46,10 +46,11 @@ angular.module('GLFilters', []).
       if (angular.isUndefined(wb_last_access)) {
         return undefined;
       }
+
       var a = new Date(wb_last_access);
       var revokeDate = new Date(a.setDate(wbtip_timetolive));
-      var s = $filter('date')(revokeDate, 'dd-MM-yyyy HH:mm');
-      return s;
+
+      return $filter('date')(revokeDate, 'dd-MM-yyyy HH:mm Z');
     };
   }])
 ;

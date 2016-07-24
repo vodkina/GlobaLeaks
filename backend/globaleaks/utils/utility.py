@@ -368,12 +368,17 @@ def ISO8601_to_day_str(isodate, tz=0):
                     minute=int(isodate[14:16]),
                     second=int(isodate[17:19]))
 
-    if tz:
+    if tz != 0:
         tz_i, tz_d = divmod(tz, 1)
         tz_d, _  = divmod(tz_d * 100, 1)
         date += timedelta(hours=tz_i, minutes=tz_d)
 
-    return date.strftime("%d/%m/%Y")
+    ret = date.strftime("%d/%m/%Y")
+
+    if tz == 0:
+        ret += " (UTC)"
+
+    return ret
 
 
 def ISO8601_to_pretty_str(isodate, tz=0):
@@ -390,13 +395,13 @@ def ISO8601_to_pretty_str(isodate, tz=0):
                     minute=int(isodate[14:16]),
                     second=int(isodate[17:19]) )
 
-    if tz:
+    if tz != 0:
         tz_i, tz_d = divmod(tz, 1)
         tz_d, _  = divmod(tz_d * 100, 1)
         date += timedelta(hours=tz_i, minutes=tz_d)
         return date.strftime("%A %d %B %Y %H:%M")
-
-    return datetime_to_pretty_str(date)
+    else:
+        return datetime_to_pretty_str(date)
 
 
 def iso_year_start(iso_year):

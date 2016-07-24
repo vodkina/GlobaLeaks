@@ -37,8 +37,6 @@ controller('AdminReceiverEditorCtrl', ['$scope', 'CONSTANTS',
       $scope.save_receiver($scope.receiver, false);
     };
 
-    $scope.timezones = CONSTANTS.timezones;
-
     $scope.isSelected = function (context) {
       return $scope.receiver.contexts.indexOf(context.id) !== -1;
     };

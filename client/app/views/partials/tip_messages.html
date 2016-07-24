@@ -56,7 +56,7 @@
               <div class="WbNameInMessages" data-translate>Whistleblower</div>
             </div>
             <div class="pull-right" style="margin-right:20px">
-              <div>{{::message.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+              <div>{{::message.creation_date | date:'dd-MM-yyyy HH:mm Z'}}</div>
             </div>
           </div>
           <div class="preformatted">{{::message.content}}</div>
@@ -67,7 +67,7 @@
               <div class="WbNameInMessages">{{::message.author}}</div>
             </div>
             <div class="pull-right" style="margin-right:20px">
-              <div>{{::message.creation_date | date:'dd-MM-yyyy HH:mm'}}</div>
+              <div>{{::message.creation_date | date:'dd-MM-yyyy HH:mm Z'}}</div>
             </div>
           </div>
           <div class="preformatted">{{::message.content}}</div>

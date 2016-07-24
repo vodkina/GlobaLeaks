@@ -80,7 +80,6 @@ def user_serialize_user(user, language):
         'description': user.description,
         'mail_address': user.mail_address,
         'language': user.language,
-        'timezone': user.timezone,
         'password_change_needed': user.password_change_needed,
         'password_change_date': datetime_to_ISO8601(user.password_change_date),
         'pgp_key_info': user.pgp_key_info,
@@ -111,7 +110,6 @@ def db_user_update_user(store, user_id, request, language):
     This version of the function is specific for users that with comparison with
     admins can change only few things:
       - preferred language
-      - preferred timezone
       - the password (with old password check)
       - pgp key
     raises: globaleaks.errors.ReceiverIdNotFound` if the receiver does not exist.
@@ -122,7 +120,6 @@ def db_user_update_user(store, user_id, request, language):
         raise errors.UserIdNotFound
 
     user.language = request.get('language', GLSettings.memory_copy.default_language)
-    user.timezone = request.get('timezone', GLSettings.memory_copy.default_timezone)
 
     new_password = request['password']
     old_password = request['old_password']
@@ -155,7 +152,6 @@ class UserInstance(BaseHandler):
     """
     This handler allow users to modify some of their fields:
         - language
-        - timezone
         - password
         - notification settings
         - pgp key
