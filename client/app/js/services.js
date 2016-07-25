@@ -865,11 +865,11 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
   factory('Utils', ['$rootScope', '$location', '$filter', '$sce', '$uibModal', 'Authentication',
   function($rootScope, $location, $filter, $sce, $uibModal, Authentication) {
     return {
-      glDateTimeFormat: function(d) {
+      dateTimeFormat: function(d) {
         return $filter('date')(d, 'dd-MM-yyyy HH:mm Z');
       },
 
-      glDateFormat: function(d) {
+      dateFormat: function(d) {
         return $filter('date')(d, 'dd-MM-yyyy Z');
       },
 

@@ -53,12 +53,12 @@ angular.module('GLFilters', []).
       return Utils.dateFormat(revokeDate);
     };
   }])
-  .filter('dateFmt', ['Utils', function(Utils) {
+  .filter('glDateFmt', ['Utils', function(Utils) {
     return function(date) {
       return Utils.dateFormat(date);
     };
   }])
-  .filter('dateTimeFmt', ['Utils', function(Utils) {
+  .filter('glDateTimeFmt', ['Utils', function(Utils) {
     return function(date) {
       return Utils.dateTimeFormat(date);
     };
