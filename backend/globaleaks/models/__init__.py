@@ -532,9 +532,9 @@ class Node(Model):
     threshold_free_disk_megabytes_medium = Int(validator=natnum_v, default=500)
     threshold_free_disk_megabytes_low = Int(validator=natnum_v, default=1000)
 
-    threshold_free_disk_percentage_high = Int(default=3)
-    threshold_free_disk_percentage_medium = Int(default=5)
-    threshold_free_disk_percentage_low = Int(default=10)
+    threshold_free_disk_percentage_high = Int(validator=in_range(0, 100), default=3)
+    threshold_free_disk_percentage_medium = Int(validator=in_range(0, 100), default=5)
+    threshold_free_disk_percentage_low = Int(validator=in_range(0, 100), default=10)
 
     context_selector_type = Unicode(validator=shorttext_v, default=u'list')
 

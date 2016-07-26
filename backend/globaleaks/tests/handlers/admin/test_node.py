@@ -82,3 +82,11 @@ class TestNodeInstance(helpers.TestHandlerWithPopulatedDB):
         handler = self.request(self.dummyNode, role='admin')
 
         yield self.assertFailure(handler.put(), InvalidModelInput)
+
+    @inlineCallbacks
+    def test_put_update_node_invalid_disk_percent(self):
+        self.dummyNode['threshold_free_disk_percentage_high'] = 250
+
+        handler = self.request(self.dummyNode, role='admin')
+
+        yield self.assertFailure(handler.put(), InvalidModelInput)

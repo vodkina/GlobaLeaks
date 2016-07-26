@@ -8,8 +8,21 @@ import re
 
 from globaleaks import LANGUAGES_SUPPORTED_CODES
 from globaleaks.settings import GLSettings
-from globaleaks.rest import errors
+from globaleaks.rest.errors import InvalidModelInput
 from globaleaks.utils.utility import log
+
+
+def in_range(x, y):
+      """
+      Returns a validator that ensures the passed value stays between x and y
+      """
+      def range_v(self, attr, value):
+          if not isinstance(value, int) and not isinstance(value, float):
+              raise InvalidModelInput("range_v: expected a float or an int: (%s)" % type(value))
+          if value < x or y < value:
+              raise InvalidModelInput("range_v: input outside of valid range: (%s:%d)" % (attr, value))
+          return value
+      return range_v
 
 
 def natnum_v(self, attr, value):
@@ -17,7 +30,7 @@ def natnum_v(self, attr, value):
     Validates that the passed value is a natural number (in Z+)
     """
     if not isinstance(value, int) or value < 0:
-        raise errors.InvalidModelInput("natnum_v: expected val to be in Z+ (%s:%d)" % (attr, value))
+        raise InvalidModelInput("natnum_v: expected val to be in Z+ (%s:%d)" % (attr, value))
     return value
 
 
@@ -28,10 +41,10 @@ def shorttext_v(self, attr, value):
         value = unicode(value)
 
     if not isinstance(value, unicode):
-        raise errors.InvalidModelInput("shorttext_v: expected unicode (%s:%s)" % (attr, value))
+        raise InvalidModelInput("shorttext_v: expected unicode (%s:%s)" % (attr, value))
 
     if GLSettings.enable_input_length_checks and len(value) > GLSettings.memory_copy.maximum_namesize:
-        raise errors.InvalidModelInput("shorttext_v: length need to be < of %d"
+        raise InvalidModelInput("shorttext_v: length need to be < of %d"
                                         % GLSettings.memory_copy.maximum_namesize)
 
     return value
@@ -47,13 +60,13 @@ def longtext_v(self, attr, value):
         value = unicode(value)
 
     if not isinstance(value, unicode):
-        raise errors.InvalidModelInput("longtext_v: expected unicode (%s:%s)" %
-                                       (attr, value))
+        raise InvalidModelInput("longtext_v: expected unicode (%s:%s)" %
+                                 (attr, value))
 
     if GLSettings.enable_input_length_checks and len(value) > GLSettings.memory_copy.maximum_textsize:
-        raise errors.InvalidModelInput("longtext_v: unicode text in %s " \
-                                        "overcomes length " \
-                                        "limit %d" % (attr, GLSettings.memory_copy.maximum_textsize))
+        raise InvalidModelInput("longtext_v: unicode text in %s " \
+                                 "overcomes length " \
+                                 "limit %d" % (attr, GLSettings.memory_copy.maximum_textsize))
 
     return value
 
@@ -65,7 +78,7 @@ def dict_v(self, attr, value):
         return {}
 
     if not isinstance(value, dict):
-        raise errors.InvalidModelInput("dict_v: expected dict (%s)" % attr)
+        raise InvalidModelInput("dict_v: expected dict (%s)" % attr)
 
     for key, subvalue in value.iteritems():
         if isinstance(subvalue, str):
@@ -73,9 +86,9 @@ def dict_v(self, attr, value):
 
         if isinstance(subvalue, unicode):
             if GLSettings.enable_input_length_checks and len(subvalue) > GLSettings.memory_copy.maximum_textsize:
-                raise errors.InvalidModelInput("dict_v: text for key %s in %s " \
-                                                "overcomes length limit of %d" % (key, attr,
-                                                                                  GLSettings.memory_copy.maximum_textsize))
+                raise InvalidModelInput("dict_v: text for key %s in %s " \
+                                        "overcomes length limit of %d" % (key, attr,
+                                                                          GLSettings.memory_copy.maximum_textsize))
 
         if isinstance(subvalue, dict):
             dict_v(self, attr, subvalue)
@@ -137,13 +150,13 @@ def longlocal_v(self, attr, value):
 
 def shorturl_v(self, attr, value):
     if not re.match(r'^(/s/[a-z0-9]{1,30})$', value):
-        raise errors.InvalidModelInput("invalid shorturl")
+        raise InvalidModelInput("invalid shorturl")
 
     return value
 
 
 def longurl_v(self, attr, value):
     if not re.match(r'^(/[a-z0-9#=_&?/-]{1,255})$', value):
-        raise errors.InvalidModelInput("invalid longurl")
+        raise InvalidModelInput("invalid longurl")
 
     return value
