@@ -862,9 +862,21 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
   factory('DefaultL10NResource', ['GLResource', function(GLResource) {
     return new GLResource('l10n/:lang.json', {lang: '@lang'});
 }]).
-  factory('Utils', ['$rootScope', '$location', '$filter', '$sce', '$uibModal', 'Authentication',
-  function($rootScope, $location, $filter, $sce, $uibModal, Authentication) {
+  factory('Utils', ['$rootScope', '$location', '$filter', '$sce', '$uibModal', 'CONSTANTS', 'Authentication',
+  function($rootScope, $location, $filter, $sce, $uibModal, CONSTANTS, Authentication) {
     return {
+      // TODO map from item.timezone into Timezones
+      tzToIndex: function(tz_float) {
+        var tz = CONSTANTS.timezones.map(function(o) {
+          return o.timezone;
+        });
+        var i = tz.indexOf(tz_float);
+        if (i === -1) {
+          return tz.indexOf(0.0);
+        }
+        return i;
+      },
+
       dateTimeFormat: function(d) {
         return $filter('date')(d, 'dd-MM-yyyy HH:mm Z');
       },

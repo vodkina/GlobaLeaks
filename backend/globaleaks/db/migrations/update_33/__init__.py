@@ -20,7 +20,7 @@ class Node_v_32(Model):
     receipt_salt = Unicode(validator=shorttext_v)
     languages_enabled = JSON(default=LANGUAGES_SUPPORTED_CODES)
     default_language = Unicode(validator=shorttext_v, default=u'en')
-    default_timezone = Int(default=0)
+    default_timezone = Int(default=0)                                 # Changed to Float in vNode_v_33
     default_password = Unicode(validator=longtext_v, default=u'globaleaks')
     description = JSON(validator=longlocal_v, default=empty_localization)
     presentation = JSON(validator=longlocal_v, default=empty_localization)
@@ -182,6 +182,11 @@ class MigrationScript(MigrationBase):
         for _, v in new_node._storm_columns.iteritems():
             if v.name == 'wbtip_timetolive':
                 new_node.wbtip_timetolive = 90
+                continue
+
+            #TODO default_timezone from INT to FLOAT may be redudant
+            if v.name == 'default_timezone':
+                new_node.default_timezone = float(old_node.default_timezone)
                 continue
 
             setattr(new_node, v.name, getattr(old_node, v.name))

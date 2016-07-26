@@ -177,6 +177,7 @@ AdminNodeDesc = {
     'public_site': https_url_regexp_or_empty,
     'languages_enabled': [unicode],
     'languages_supported': list,
+    'default_timezone': float,
     'default_language': unicode,
     'default_password': unicode,
     'maximum_namesize': int,

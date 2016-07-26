@@ -90,3 +90,11 @@ class TestNodeInstance(helpers.TestHandlerWithPopulatedDB):
         handler = self.request(self.dummyNode, role='admin')
 
         yield self.assertFailure(handler.put(), InvalidModelInput)
+
+    @inlineCallbacks
+    def test_put_update_node_invalid_timezone(self):
+        self.dummyNode['default_timezone'] = -100.323423432
+
+        handler = self.request(self.dummyNode, role='admin')
+
+        yield self.assertFailure(handler.put(), InvalidModelInput)

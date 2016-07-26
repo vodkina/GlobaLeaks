@@ -6,14 +6,15 @@ from __future__ import absolute_import
 from datetime import timedelta
 
 from storm.expr import And
-from storm.locals import Bool, Int, Reference, ReferenceSet, Unicode, Storm, JSON
+from storm.locals import Bool, Int, Reference, ReferenceSet, Unicode, Storm, JSON, Float
 
 from .properties import MetaModel, DateTime
 
 from globaleaks import __version__, DATABASE_VERSION, LANGUAGES_SUPPORTED_CODES
 
 from globaleaks.models.validators import shorttext_v, longtext_v, \
-    shortlocal_v, longlocal_v, shorturl_v, longurl_v, natnum_v
+     shortlocal_v, longlocal_v, shorturl_v, longurl_v, natnum_v, \
+     in_range
 
 from globaleaks.orm import transact
 from globaleaks.security import hash_password
@@ -456,6 +457,7 @@ class Node(Model):
 
     languages_enabled = JSON(default=LANGUAGES_SUPPORTED_CODES)
     default_language = Unicode(validator=shorttext_v, default=u'en')
+    default_timezone = Float(validator=in_range(-13, 13), default=0)
     default_password = Unicode(validator=longtext_v, default=u'globaleaks')
 
     description = JSON(validator=longlocal_v, default=empty_localization)
@@ -546,6 +548,10 @@ class Node(Model):
         'default_password',
         'landing_page',
         'context_selector_type'
+    ]
+
+    float_keys = [
+        'default_timezone'
     ]
 
     int_keys = [

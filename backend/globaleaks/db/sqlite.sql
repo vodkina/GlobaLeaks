@@ -168,6 +168,7 @@ CREATE TABLE node (
     hidden_service TEXT NOT NULL,
     languages_enabled BLOB NOT NULL,
     default_language TEXT NOT NULL,
+    default_timezone FLOAT,
     default_password TEXT NOT NULL,
     name TEXT NOT NULL,
     receipt_salt TEXT NOT NULL,
