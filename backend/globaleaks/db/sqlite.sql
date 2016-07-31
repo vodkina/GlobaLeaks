@@ -1,6 +1,28 @@
 PRAGMA foreign_keys = ON;
 PRAGMA auto_vacuum = FULL;
 
+CREATE TABLE config (
+    var_name TEXT NOT NULL,
+    var_type TEXT NOT NULL CHECK (TYPE IN ('int',
+                                           'bool',
+                                           'unicode')),
+    var_value TEXT NOT NULL,
+    PRIMARY KEY (var_name)
+);
+
+CREATE TABLE config_l10n (
+    lang TEXT NOT NULL,
+    var_name TEXT NOT NULL,
+    var_value TEXT NOT NULL,
+    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    PRIMARY KEY (lang, var_name)
+);
+
+create TABLE enabledlanguage (
+    lang TEXT NOT NULL,
+    PRIMARY KEY (lang)
+);
+
 CREATE TABLE user (
     id TEXT NOT NULL,
     creation_date TEXT NOT NULL,
@@ -11,7 +33,6 @@ CREATE TABLE user (
     role TEXT NOT NULL CHECK (role IN ('admin', 'receiver', 'custodian')),
     state TEXT NOT NULL CHECK (state IN ('disabled', 'enabled')),
     name TEXT NOT NULL,
-    description BLOB NOT NULL,
     public_name TEXT NOT NULL,
     last_login TEXT NOT NULL,
     mail_address TEXT NOT NULL,
@@ -25,6 +46,14 @@ CREATE TABLE user (
     UNIQUE (username),
     FOREIGN KEY (img_id) REFERENCES file(id) ON DELETE SET NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE user_l10n (
+    obj_id TEXT NOT NULL
+    lang TEXT NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    PRIMARY KEY (obj_id, lang)
 );
 
 CREATE TABLE message (
@@ -53,9 +82,6 @@ CREATE TABLE comment (
 
 CREATE TABLE context (
     id TEXT NOT NULL,
-    name BLOB NOT NULL,
-    description BLOB NOT NULL,
-    recipients_clarification BLOB NOT NULL,
     tip_timetolive INTEGER NOT NULL,
     select_all_receivers INTEGER NOT NULL,
     maximum_selectable_receivers INTEGER,
@@ -68,7 +94,6 @@ CREATE TABLE context (
     enable_two_way_comments INTEGER NOT NULL,
     enable_two_way_messages INTEGER NOT NULL,
     enable_attachments INTEGER NOT NULL,
-    status_page_message BLOB NOT NULL,
     presentation_order INTEGER,
     show_receivers_in_alphabetical_order INTEGER NOT NULL,
     questionnaire_id TEXT,
@@ -76,6 +101,17 @@ CREATE TABLE context (
     FOREIGN KEY (questionnaire_id) REFERENCES questionnaire(id) ON DELETE SET NULL,
     FOREIGN KEY (img_id) REFERENCES file(id) ON DELETE SET NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE context_l10n (
+    obj_id TEXT NOT NULL
+    lang TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    recipients_clarification TEXT NOT NULL,
+    status_page_message TEXT NOT NULL,
+    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    PRIMARY KEY (obj_id, lang)
 );
 
 CREATE TABLE internalfile (
@@ -376,11 +412,7 @@ CREATE TABLE field (
     fieldgroup_id TEXT,
     step_id TEXT,
     key TEXT NOT NULL,
-    label TEXT NOT NULL,
-    description TEXT NOT NULL,
-    hint TEXT DEFAULT '' NOT NULL,
     multi_entry INTEGER DEFAULT 0 NOT NULL,
-    multi_entry_hint BLOB NOT NULL,
     required INTEGER DEFAULT 0 NOT NULL,
     preview INTEGER NOT NULL,
     stats_enabled INTEGER DEFAULT 0 NOT NULL,
@@ -412,6 +444,17 @@ CREATE TABLE field (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE field_l10n (
+    obj_id TEXT NOT NULL
+    lang TEXT NOT NULL,
+    label TEXT NOT NULL,
+    description TEXT NOT NULL,
+    hint TEXT NOT NULL,
+    multi_entry_hint TEXT NOT NULL,
+    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    PRIMARY KEY (obj_id, lang)
+);
+
 CREATE TABLE fieldattr (
     id TEXT NOT NULL,
     field_id TEXT NOT NULL,
@@ -428,7 +471,6 @@ CREATE TABLE fieldattr (
 CREATE TABLE fieldoption (
     id TEXT NOT NULL,
     field_id TEXT NOT NULL,
-    label TEXT NOT NULL,
     presentation_order INTEGER NOT NULL,
     score_points INTEGER NOT NULL CHECK (score_points >= 0 AND score_points <= 1000),
     trigger_field TEXT,
@@ -437,6 +479,14 @@ CREATE TABLE fieldoption (
     FOREIGN KEY (trigger_field) REFERENCES field(id) ON DELETE CASCADE,
     FOREIGN KEY (trigger_step) REFERENCES step(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE fieldoption_l10n (
+    obj_id TEXT NOT NULL
+    lang TEXT NOT NULL,
+    label TEXT NOT NULL,
+    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    PRIMARY KEY (obj_id, lang)
 );
 
 CREATE TABLE questionnaire (
@@ -453,12 +503,19 @@ CREATE TABLE questionnaire (
 CREATE TABLE step (
     id TEXT NOT NULL,
     questionnaire_id TEXT NOT NULL,
-    label TEXT NOT NULL,
-    description TEXT NOT NULL,
     presentation_order INTEGER NOT NULL,
     triggered_by_score INTEGER DEFAULT 0 NOT NULL,
     FOREIGN KEY (questionnaire_id) REFERENCES questionnaire(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE step_l10n (
+    obj_id TEXT NOT NULL
+    lang TEXT NOT NULL,
+    label TEXT NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    PRIMARY KEY (obj_id, lang)
 );
 
 CREATE TABLE fieldanswer (

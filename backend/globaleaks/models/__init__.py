@@ -157,6 +157,26 @@ class ModelWithID(Model):
         return store.find(cls, cls.id == obj_id).one()
 
 
+class Config(Model):
+    __storm_primary__ = 'var_name', 'var_type'
+
+    var_name = Unicode(validator_shorttext_v)
+    var_type = Unicode()
+    var_value Unicode()
+
+
+class Config_l10n(Model):
+    __storm_primary__ = 'lang', 'var_name'
+
+    lang = Unicode()
+    var_name = Unicode(validator_shorttext_v)
+    var_value Unicode()
+
+
+class EnabledLanguage(BaseModel):
+    name = Unicode(primary=True)
+
+
 class User(ModelWithID):
     """
     This model keeps track of globaleaks users.
