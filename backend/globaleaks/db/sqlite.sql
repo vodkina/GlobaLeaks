@@ -2,20 +2,20 @@ PRAGMA foreign_keys = ON;
 PRAGMA auto_vacuum = FULL;
 
 CREATE TABLE config (
+    var_group TEXT NOT NULL,
     var_name TEXT NOT NULL,
-    var_type TEXT NOT NULL CHECK (TYPE IN ('int',
-                                           'bool',
-                                           'unicode')),
-    var_value TEXT NOT NULL,
-    PRIMARY KEY (var_name)
+    var_type TEXT NOT NULL CHECK (var_type IN ('int', 'str', 'bool')),
+    raw_value BLOB NOT NULL,
+    PRIMARY KEY (var_group, var_name)
 );
 
 CREATE TABLE config_l10n (
     lang TEXT NOT NULL,
+    var_group TEXT NOT NULL,
     var_name TEXT NOT NULL,
     var_value TEXT NOT NULL,
-    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
-    PRIMARY KEY (lang, var_name)
+    FOREIGN KEY (lang) REFERENCES enabledlanguage(lang) ON DELETE CASCADE,
+    PRIMARY KEY (lang, var_group, var_name)
 );
 
 create TABLE enabledlanguage (
@@ -49,10 +49,11 @@ CREATE TABLE user (
 );
 
 CREATE TABLE user_l10n (
-    obj_id TEXT NOT NULL
+    obj_id TEXT NOT NULL,
     lang TEXT NOT NULL,
     description TEXT NOT NULL,
-    FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
+    FOREIGN KEY (lang) REFERENCES enabledlanguage(lang) ON DELETE CASCADE,
+    FOREIGN KEY (obj_id) REFERENCES user(id) ON DELETE CASCADE,
     PRIMARY KEY (obj_id, lang)
 );
 
@@ -104,7 +105,7 @@ CREATE TABLE context (
 );
 
 CREATE TABLE context_l10n (
-    obj_id TEXT NOT NULL
+    obj_id TEXT NOT NULL,
     lang TEXT NOT NULL,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -420,6 +421,10 @@ CREATE TABLE field (
     triggered_by_score INTEGER DEFAULT 0 NOT NULL,
     x INTEGER DEFAULT 0 NOT NULL,
     y INTEGER DEFAULT 0 NOT NULL,
+    label TEXT NOT NULL, -- TODO remove me
+    description TEXT NOT NULL, -- TODO remove me
+    hint TEXT NOT NULL, -- TODO remove me
+    multi_entry_hint TEXT NOT NULL, -- TODO remove me
     width INTEGER DEFAULT 0 NOT NULL CHECK (width >= 0 AND width <= 12),
     type TEXT NOT NULL CHECK (type IN ('inputbox',
                                        'textarea',
@@ -445,7 +450,7 @@ CREATE TABLE field (
 );
 
 CREATE TABLE field_l10n (
-    obj_id TEXT NOT NULL
+    obj_id TEXT NOT NULL,
     lang TEXT NOT NULL,
     label TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -475,6 +480,7 @@ CREATE TABLE fieldoption (
     score_points INTEGER NOT NULL CHECK (score_points >= 0 AND score_points <= 1000),
     trigger_field TEXT,
     trigger_step TEXT,
+    label TEXT NOT NULL, -- TODO remove me
     FOREIGN KEY (field_id) REFERENCES field(id) ON DELETE CASCADE,
     FOREIGN KEY (trigger_field) REFERENCES field(id) ON DELETE CASCADE,
     FOREIGN KEY (trigger_step) REFERENCES step(id) ON DELETE CASCADE,
@@ -482,7 +488,7 @@ CREATE TABLE fieldoption (
 );
 
 CREATE TABLE fieldoption_l10n (
-    obj_id TEXT NOT NULL
+    obj_id TEXT NOT NULL,
     lang TEXT NOT NULL,
     label TEXT NOT NULL,
     FOREIGN KEY (lang) REFERENCES enabled_language(lang) ON DELETE CASCADE,
@@ -505,12 +511,13 @@ CREATE TABLE step (
     questionnaire_id TEXT NOT NULL,
     presentation_order INTEGER NOT NULL,
     triggered_by_score INTEGER DEFAULT 0 NOT NULL,
+    label TEXT NOT NULL, -- TODO remove me
     FOREIGN KEY (questionnaire_id) REFERENCES questionnaire(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE step_l10n (
-    obj_id TEXT NOT NULL
+    obj_id TEXT NOT NULL,
     lang TEXT NOT NULL,
     label TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -587,3 +594,4 @@ CREATE INDEX field__template_id_index ON field(template_id);
 CREATE INDEX step__questionnaire_id_index ON step(questionnaire_id);
 CREATE INDEX context_questionnaire_id_index ON context(questionnaire_id);
 CREATE INDEX fieldanswer__internaltip_id_index ON fieldanswer(internaltip_id);
+CREATE INDEX config_group_index ON config(var_group);

@@ -4,9 +4,25 @@ from storm import exceptions
 from twisted.internet.defer import inlineCallbacks
 
 from globaleaks import models
+from globaleaks.models import config
 from globaleaks.handlers.admin.questionnaire import db_get_default_questionnaire_id
 from globaleaks.orm import transact, transact_ro
 from globaleaks.tests import helpers
+from globaleaks.settings import GLSettings
+
+
+class TestSystemConfigModels(helpers.TestGL):
+    @inlineCallbacks
+    def test_config_import(self):
+        yield self._test_config_import()
+
+    @transact
+    def _test_config_import(self, store):
+        config.load_json_config(store)
+        GLSettings.orm_debug = True
+
+        c = store.find(models.Config).count()
+        self.assertEqual(c, 6)
 
 
 class TestModels(helpers.TestGL):

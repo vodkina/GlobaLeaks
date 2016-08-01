@@ -12,6 +12,7 @@ from storm import exceptions
 from twisted.internet.defer import succeed, inlineCallbacks
 
 from globaleaks import models,  __version__, DATABASE_VERSION
+from globaleaks.models import config
 from globaleaks.db.appdata import db_update_appdata
 from globaleaks.handlers.admin import files
 from globaleaks.orm import transact, transact_ro
@@ -65,6 +66,8 @@ def init_db(store):
     for k in appdata_dict['templates']:
         setattr(notification, k, appdata_dict['templates'][k])
     store.add(notification)
+
+    config.load_json_config(store)
 
     logo_data = ''
     with open(os.path.join(GLSettings.client_path, 'logo.png'), 'r') as logo_file:
