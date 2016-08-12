@@ -21,11 +21,13 @@ class ObjectDict(dict):
 
 
 # TODO inherit from dict and redefine __getattr__ and __setattr__
-class ConfigFactory(object):
-    def __init__(self, group, store):
+class ConfigFactory(dict):
+    def __init__(self, group, store, lazy=True):
         self.group = unicode(group)
         self.store = store
         self.res = None
+        if not lazy:
+            self._query_group()
 
     # TODO find var_name with SELECT IN.
     # def _select_from_set(self, safe_set):
@@ -53,14 +55,20 @@ class ConfigFactory(object):
         else:
             return self.res[var_name]
 
-    def get_val(self, var_name):
+    def __getitem__(self, var_name):
         return self.get(var_name).get_val()
 
-    def set_val(self, var_name, value):
+    def __setitem__(self, var_name, value):
         if self.res is None or not var_name in self.res:
-            raise KeyError("Factory is not initialized with %s" %s)
+            raise KeyError("Factory is not initialized with %s" % var_name)
         else:
             self.res[var_name].set_val(value)
+
+    def iteritems(self):
+        return self.res.iteritems()
+
+    def keys(self):
+        return self.res.keys()
 
     def _export_group_dict(self, safe_set):
         self._query_group()
@@ -70,8 +78,8 @@ class ConfigFactory(object):
 class NodeFactory(ConfigFactory):
     _update_set = SafeSets.admin_node
 
-    def __init__(self, store):
-        ConfigFactory.__init__(self, 'node', store)
+    def __init__(self, store, *args, **kwargs):
+        ConfigFactory.__init__(self, 'node', store, *args, **kwargs)
 
     def public_export(self):
         return self._export_group_dict(SafeSets.public_node)
@@ -83,8 +91,8 @@ class NodeFactory(ConfigFactory):
 class NotificationFactory(ConfigFactory):
     _update_set = SafeSets.admin_notification
 
-    def __init__(self, store):
-        ConfigFactory.__init__(self, 'notification', store)
+    def __init__(self, store, *args, **kwargs):
+        ConfigFactory.__init__(self, 'notification', store, *args, **kwargs)
 
     def admin_export(self):
         return self._export_group_dict(SafeSets.admin_notification)

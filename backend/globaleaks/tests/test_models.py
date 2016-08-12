@@ -4,7 +4,8 @@ from storm import exceptions
 from twisted.internet.defer import inlineCallbacks
 
 from globaleaks import models, LANGUAGES_SUPPORTED
-from globaleaks.models import ConfigL10N, config
+from globaleaks.models import ConfigL10N, config, groups
+from globaleaks.models.config import Config
 from globaleaks.db.appdata import load_appdata
 from globaleaks.models.l10n import Node_L10N, EnabledLanguage
 from globaleaks.handlers.admin.questionnaire import db_get_default_questionnaire_id
@@ -26,6 +27,30 @@ class TestSystemConfigModels(helpers.TestGL):
 
         stated_conf = reduce(lambda x,y: x+y, [len(v) for k, v in GLConfig.iteritems()], 0)
         self.assertEqual(c, stated_conf)
+
+    @inlineCallbacks
+    def test_config_factory_api(self):
+        yield self._test_config_factory_api()
+
+    @transact
+    def _test_config_factory_api(self, store):
+        node = config.NodeFactory(store, lazy=False)
+
+        # Test __getitem__ and __setitem__
+        v = 'fuori canne fuori'
+        node['name'] = v
+        self.assertEqual(v, node['name'])
+
+        c = store.find(Config, Config.var_name==u'name',
+                       Config.var_group==u'node').one()
+
+        self.assertEqual(node['name'], c.get_val())
+
+        # Test keys and iteritems
+        g = groups.GLConfig['node'].keys()
+        k = node.keys()
+        self.assertItemsEqual(g, k)
+
 
 class TestConfigL10N(helpers.TestGL):
     @inlineCallbacks
