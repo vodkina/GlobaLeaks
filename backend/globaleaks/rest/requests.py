@@ -111,6 +111,8 @@ SubmissionDesc = {
     'auth_token_hash': unicode,
     'wb_ccrypto_key_private': unicode,
     'wb_ccrypto_key_public': unicode,
+    'sess_cckey_pub': unicode,
+    'sess_cckey_prv_enc': unicode,
     'total_score': int
 }
 

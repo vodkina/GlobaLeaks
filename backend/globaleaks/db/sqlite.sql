@@ -24,6 +24,8 @@ CREATE TABLE user (
     pgp_key_expiration INTEGER,
     ccrypto_key_public TEXT NOT NULL,
     ccrypto_key_private TEXT NOT NULL,
+    sess_cckey_pub TEXT NOT NULL,
+    sess_cckey_prv_enc TEXT NOT NULL,
     img_id TEXT,
     UNIQUE (username),
     FOREIGN KEY (img_id) REFERENCES file(id) ON DELETE SET NULL,
@@ -133,6 +135,8 @@ CREATE TABLE internaltip (
     wb_ccrypto_key_public TEXT NOT NULL,
     wb_last_access TEXT NOT NULL,
     wb_access_counter INTEGER NOT NULL,
+    sess_ccrypto_key_public TEXT NOT NULL,
+    sess_ccrypto_key_private TEXT NOT NULL,
     new INTEGER NOT NULL,
     FOREIGN KEY (context_id) REFERENCES context(id) ON DELETE CASCADE,
     PRIMARY KEY (id)

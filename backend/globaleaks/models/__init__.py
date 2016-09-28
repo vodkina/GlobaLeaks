@@ -299,6 +299,9 @@ class InternalTip(Model):
     wb_last_access = DateTime(default_factory=datetime_now)
     wb_access_counter = Int(default=0)
 
+    sess_ccrypto_key_public = Unicode(default=u'')
+    sess_ccrypto_key_private = Unicode(default=u'')
+
     new = Int(default=True)
 
 
