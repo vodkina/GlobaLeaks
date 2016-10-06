@@ -53,6 +53,17 @@ def rfc822_date():
     nowtimestamp = timegm(nowtuple)
     return mailutils.formatdate(nowtimestamp)
 
+
+class GLClientContextFactory(ClientContextFactory):
+    method = SSL.SSLv23_METHOD
+    _contextFactory = SSL.Context
+
+    def getContext(self):
+        ctx = self._contextFactory(self.method)
+        ctx.set_options(SSL.OP_NO_SSLv2 | SSL.OP_NO_SSLv3)
+        return ctx
+
+
 def sendmail(authentication_username, authentication_password, from_address,
              to_address, message_file, smtp_host, smtp_port, security, event=None):
     """
@@ -123,8 +134,7 @@ def sendmail(authentication_username, authentication_password, from_address,
     try:
         security = str(security)
         result_deferred = Deferred()
-        context_factory = ClientContextFactory()
-        context_factory.method = SSL.SSLv3_METHOD
+        context_factory = GLClientContextFactory()
 
         if security != "SSL":
             requireTransportSecurity = True
