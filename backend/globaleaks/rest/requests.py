@@ -84,8 +84,8 @@ AuthDesc = {
 PassKeyUpdateDesc = {
     'new_auth_token_hash': sha512_regexp,
     'old_auth_token_hash': sha512_regexp,
-    'ccrypto_key_private': unicode,
-    'ccrypto_key_public': unicode,
+    'cckey_prv_penc': unicode,
+    'cckey_pub': unicode,
 }
 
 ReceiptAuthDesc = {

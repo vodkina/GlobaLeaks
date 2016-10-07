@@ -112,8 +112,8 @@ class PassKeyUpdateInstance(helpers.TestHandlerWithPopulatedDB):
         self.req_body = {
             'old_auth_token_hash': self.user['auth_token_hash'],
             'new_auth_token_hash': new_token,
-            'ccrypto_key_public':  helpers.PGPKEYS['VALID_PGP_KEY1_PUB'],
-            'ccrypto_key_private': helpers.PGPKEYS['VALID_PGP_KEY1_PRV'],
+            'cckey_pub':  helpers.PGPKEYS['VALID_PGP_KEY1_PUB'],
+            'cckey_prv_penc': helpers.PGPKEYS['VALID_PGP_KEY1_PRV'],
         }
 
     @inlineCallbacks
@@ -144,12 +144,11 @@ class PassKeyUpdateInstance(helpers.TestHandlerWithPopulatedDB):
 
     @inlineCallbacks
     def test_invalid_pubkey(self):
-        self.req_body['ccrypto_key_public'] = "aaa"
+        self.req_body['cckey_pub'] = "aaa"
         handler = self.request(self.req_body, user_id=self.user['id'], role='receiver')
 
         handler.post()
 
-        self.req_body['ccrypto_key_public'] = "adfasdf"
         yield self.assertFailure(handler.post(), errors.ForbiddenOperation)
 
     def test_invalid_privkey(self):

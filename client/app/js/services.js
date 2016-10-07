@@ -41,8 +41,8 @@ angular.module('GLServices', ['ngResource']).
             function initPreferences(prefs) {
               GLTranslate.addUserPreference(prefs.language);
               // TODO Test thoroughly with acid
-              if (prefs.ccrypto_key_public !== "") {
-                glbcKeyRing.initialize(prefs.ccrypto_key_private, prefs.id);
+              if (prefs.cckey_pub !== "") {
+                glbcKeyRing.initialize(prefs.cckey_prv_penc, prefs.id);
               } else {
                 locationForce.set('/forcedpasswordchange');
               }
@@ -425,7 +425,7 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
         });
 
         self.receivers.forEach(function(rec) {
-          glbcKeyRing.addPubKey(rec.id, rec.ccrypto_key_public);
+          glbcKeyRing.addPubKey(rec.id, rec.cckey_pub);
         });
 
         var keycode = glbcKeyLib.generateKeycode();
@@ -577,7 +577,7 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
           if (tip.encrypted) {
             glbcKeyRing.addPubKey('whistleblower', tip.wb_cckey_pub);
             angular.forEach(tip.receivers, function(receiver) {
-              glbcKeyRing.addPubKey(receiver.id, receiver.ccrypto_key_public);
+              glbcKeyRing.addPubKey(receiver.id, receiver.cckey_pub);
             });
           }
 

@@ -240,7 +240,7 @@ class MigrationScript(MigrationBase):
         for old_obj in old_objs:
             new_obj = self.model_to['User']()
             for _, v in new_obj._storm_columns.iteritems():
-                if v.name == 'ccrypto_key_public' or v.name == 'ccrypto_key_private':
+                if v.name == 'cckey_pub' or v.name == 'cckey_prv_penc':
                     continue
 
                 if v.name == 'auth_token_hash':

@@ -114,7 +114,7 @@ def serialize_context(store, context, language):
     @return: a dict describing the contexts available for submission,
         (e.g. checks if almost one receiver is associated)
     """
-    context_receivers = [r.id for r in context.receivers if r.user.ccrypto_key_public != ""]
+    context_receivers = [r.id for r in context.receivers if r.user.cckey_pub != ""]
 
     ret_dict = {
         'id': context.id,
@@ -295,7 +295,7 @@ def serialize_receiver(receiver, language):
         'state': receiver.user.state,
         'configuration': receiver.configuration,
         'presentation_order': receiver.presentation_order,
-        'ccrypto_key_public': receiver.user.ccrypto_key_public,
+        'cckey_pub': receiver.user.cckey_pub,
         'contexts': [c.id for c in receiver.contexts],
         'picture': receiver.user.picture.data if receiver.user.picture is not None else ''
     }

@@ -25,8 +25,8 @@ class TestWizard(helpers.TestHandler):
             'auth': {
                 'old_auth_token_hash': derive_auth_hash('password', salt),
                 'new_auth_token_hash': derive_auth_hash('password', salt),
-                'ccrypto_key_public': '',
-                'ccrypto_key_private': ''
+                'cckey_pub': '',
+                'cckey_prv_penc': ''
              },
             'mail_address': 'evilaliv3@globaleaks.org',
         }

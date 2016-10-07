@@ -24,8 +24,6 @@ def db_initialize_user(store, user):
     user.auth_token_hash = security.derive_auth_hash(node.default_password, user.salt)
     user.password_change_needed = True
     user.password_change_date = datetime_null()
-    user.ccrypto_key_public = ''
-    user.ccrypto_key_private = ''
 
 
 def db_reinitialize_user(store, user):

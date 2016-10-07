@@ -34,10 +34,10 @@ angular.module('GLBrowserCrypto')
       }
 
       receivers = receivers.filter(function(rec) {
-        return rec.ccrypto_key_public !== "";
+        return rec.cckey_pub !== "";
       });
       receivers.forEach(function(rec) {
-        glbcKeyRing.addPubKey(rec.id, rec.ccrypto_key_public);
+        glbcKeyRing.addPubKey(rec.id, rec.cckey_pub);
       });
 
       variables.keyDerived = true;

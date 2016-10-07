@@ -62,8 +62,8 @@ def wizard(store, request, language):
         admin_user = db_create_admin_user(store, admin_dict, language)
         admin_user.salt = request['admin']['salt']
         admin_user.auth_token_hash = request['admin']['auth']['new_auth_token_hash']
-        admin_user.ccrypto_key_public = request['admin']['auth']['ccrypto_key_public']
-        admin_user.ccrypto_key_private = request['admin']['auth']['ccrypto_key_private']
+        admin_user.cckey_pub = request['admin']['auth']['cckey_pub']
+        admin_user.cckey_prv_penc = request['admin']['auth']['cckey_prv_penc']
         admin_user.password_change_needed = False
         admin_user.password_change_date = datetime_now()
 

@@ -71,13 +71,13 @@ angular.module('GLBrowserCrypto')
         updateBody = {
           'old_auth_token_hash': authDeriv.old_res.authentication,
           'new_auth_token_hash': authDeriv.new_res.authentication,
-          'ccrypto_key_public': '',
-          'ccrypto_key_private': glbcKeyRing.exportPrivKey(),
+          'cckey_pub': '',
+          'cckey_prv_penc': glbcKeyRing.exportPrivKey(),
         };
 
         if (vars.keyGen) {
-          showMsg('Saving the encryption keys on the platform');
-          updateBody.ccrypto_key_public = glbcKeyRing.getPubKey('private').armor();
+          showMsg('Saving the encryption key on the platform');
+          updateBody.cckey_pub = glbcKeyRing.getPubKey('private').armor();
         } else {
           showMsg('Updating the encryption key on the platform');
         }

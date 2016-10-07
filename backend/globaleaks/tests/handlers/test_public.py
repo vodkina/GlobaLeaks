@@ -85,7 +85,7 @@ class TestPublicResource(helpers.TestHandlerWithPopulatedDB):
             recs = [rec for rec in store.find(Receiver)]
             for r in recs:
               r.user.state = u"disabled"
-              r.user.ccrypto_key_public = ""
+              r.user.cckey_pub = ""
 
         yield disable_receivers()
         

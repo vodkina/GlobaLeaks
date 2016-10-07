@@ -540,8 +540,8 @@ class TestGLWithPopulatedDB(TestGL):
           'old_auth_token_hash': security.derive_auth_hash(self.dummyNode['default_password'], recDict['salt']),
           'new_auth_token_hash': VALID_AUTH_TOK_HASH1,
           'salt': VALID_SALT1,
-          'ccrypto_key_public': PGPKEYS['VALID_PGP_KEY1_PUB'],
-          'ccrypto_key_private': PGPKEYS['VALID_PGP_KEY1_PRV'],
+          'cckey_pub': PGPKEYS['VALID_PGP_KEY1_PUB'],
+          'cckey_prv_penc': PGPKEYS['VALID_PGP_KEY1_PRV'], #NOTE this is not a password enc'd key.
         }
 
 

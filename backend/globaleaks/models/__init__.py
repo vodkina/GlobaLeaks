@@ -191,8 +191,8 @@ class User(Model):
     pgp_key_expiration = DateTime(default_factory=datetime_null)
     # END of PGP key fields
 
-    ccrypto_key_public = Unicode(default=u'')
-    ccrypto_key_private = Unicode(default=u'')
+    cckey_pub = Unicode(default=u'')
+    cckey_prv_penc = Unicode(default=u'')
 
     img_id = Unicode()
 
@@ -770,7 +770,7 @@ class Receiver(Model):
     ]
 
     def ready_for_submissions(self):
-        return self.user.ccrypto_key_public != '' and self.user.state != u'disabled'
+        return self.user.cckey_pub != '' and self.user.state != u'disabled'
 
 
 class Field(Model):

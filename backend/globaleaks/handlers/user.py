@@ -82,8 +82,8 @@ def user_serialize_user(user, language):
         'pgp_key_public': user.pgp_key_public,
         'pgp_key_expiration': datetime_to_ISO8601(user.pgp_key_expiration),
         'pgp_key_remove': False,
-        'ccrypto_key_public': user.ccrypto_key_public,
-        'ccrypto_key_private': user.ccrypto_key_private,
+        'cckey_pub': user.cckey_pub,
+        'cckey_prv_penc': user.cckey_prv_penc,
         'picture': user.picture.data if user.picture is not None else ''
     }
 
@@ -204,25 +204,25 @@ def update_passkey(store, request, current_session_id):
     if (user is None or user.auth_token_hash != request['old_auth_token_hash']
         or request['old_auth_token_hash'] == request['new_auth_token_hash']):
         return False
-    log.debug('Found User %s' % user.username)
+    log.debug('Changing Key of User %s' % user.username)
 
     # This is the first time a user has ever logged in.
-    if (user.ccrypto_key_public == "" and user.password_change_date == datetime_null()):
-        if request['ccrypto_key_public'] == "": # TODO and invalid public key
+    if (user.cckey_pub == "" and user.password_change_date == datetime_null()):
+        if request['cckey_pub'] == "": # TODO check for invalid public key
             return False
         log.debug("Setting user's public CC key")
-        user.ccrypto_key_public = request['ccrypto_key_public']
+        user.cckey_pub = request['cckey_pub']
     else:
-        log.debug("Only updating a user's private key")
+        log.debug("Only updating the user's private key")
 
     user.auth_token_hash = request['new_auth_token_hash']
 
     user.password_change_needed = False
     user.password_change_date = datetime_now()
 
-    log.debug('Setting private key')
+    log.debug('Setting the private key')
     # TODO perform validation on the passed pgp private key to assert
     # correspondence with the pub key.
-    user.ccrypto_key_private = request['ccrypto_key_private']
+    user.cckey_prv_penc = request['cckey_prv_penc']
 
     return True

@@ -363,7 +363,7 @@ def create_receivertips(store, submission, receiver_id_list):
         if context not in receiver.contexts:
             continue
 
-        if receiver.user.ccrypto_key_public == "":
+        if receiver.user.cckey_pub == "":
             continue
 
         rtip = db_create_receivertip(store, receiver, submission)
