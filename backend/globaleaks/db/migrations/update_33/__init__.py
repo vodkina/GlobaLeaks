@@ -306,7 +306,7 @@ class MigrationScript(MigrationBase):
                     new_obj.encrypted_answers = ''
                     continue
 
-                if v.name == 'wb_ccrypto_key_public':
+                if v.name == 'wb_cckey_pub':
                     continue
 
                 setattr(new_obj, v.name, getattr(old_obj, v.name))
@@ -328,7 +328,7 @@ class MigrationScript(MigrationBase):
                     new_obj.auth_token_hash = security.sha512(wb_key_passphrase)
                     continue
 
-                if v.name == 'wb_ccrypto_key_private':
+                if v.name == 'wb_cckey_prv_penc':
                     continue
 
                 setattr(new_obj, v.name, getattr(old_obj, v.name))

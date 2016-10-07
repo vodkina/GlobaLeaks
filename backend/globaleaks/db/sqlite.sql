@@ -132,11 +132,11 @@ CREATE TABLE internaltip (
     enable_whistleblower_identity INTEGER NOT NULL,
     identity_provided INTEGER NOT NULL,
     identity_provided_date TEXT NOT NULL,
-    wb_ccrypto_key_public TEXT NOT NULL,
+    wb_cckey_pub TEXT NOT NULL,
     wb_last_access TEXT NOT NULL,
     wb_access_counter INTEGER NOT NULL,
-    sess_ccrypto_key_public TEXT NOT NULL,
-    sess_ccrypto_key_private TEXT NOT NULL,
+    sess_cckey_pub TEXT NOT NULL,
+    sess_cckey_prv_enc TEXT NOT NULL,
     new INTEGER NOT NULL,
     FOREIGN KEY (context_id) REFERENCES context(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
@@ -338,7 +338,7 @@ CREATE TABLE receivertip (
 CREATE TABLE whistleblowertip (
     id TEXT NOT NULL,
     auth_token_hash TEXT NOT NULL,
-    wb_ccrypto_key_private TEXT NOT NULL,
+    wb_cckey_prv_penc TEXT NOT NULL,
     FOREIGN KEY (id) REFERENCES internaltip(id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 );

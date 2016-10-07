@@ -109,8 +109,9 @@ SubmissionDesc = {
     'answers': dict,
     'encrypted_answers': unicode,
     'auth_token_hash': unicode,
-    'wb_ccrypto_key_private': unicode,
-    'wb_ccrypto_key_public': unicode,
+    # TODO use a regex for ascii armored keys
+    'wb_cckey_prv_penc': unicode,
+    'wb_cckey_pub': unicode,
     'sess_cckey_pub': unicode,
     'sess_cckey_prv_enc': unicode,
     'total_score': int

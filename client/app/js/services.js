@@ -575,7 +575,7 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
 
           //TODO handle tip.encrypted flag all in one.
           if (tip.encrypted) {
-            glbcKeyRing.addPubKey('whistleblower', tip.wb_ccrypto_key_public);
+            glbcKeyRing.addPubKey('whistleblower', tip.wb_cckey_pub);
             angular.forEach(tip.receivers, function(receiver) {
               glbcKeyRing.addPubKey(receiver.id, receiver.ccrypto_key_public);
             });
@@ -670,7 +670,7 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
         var comments = allRes[1]; 
 
         if (tip.encrypted) { // TODO delete me
-          glbcWhistleblower.initialize(tip.wb_ccrypto_key_private, tip.receivers);
+          glbcWhistleblower.initialize(tip.wb_cckey_prv_penc, tip.receivers);
           glbcWhistleblower.unlock();
         }
 

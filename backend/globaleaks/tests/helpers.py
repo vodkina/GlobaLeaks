@@ -392,9 +392,9 @@ class TestGL(unittest.TestCase):
             'total_score': 0,
             'answers': (yield self.fill_random_answers(context_id)),
             'encrypted_answers': '',
-            'wb_ccrypto_key_private': '',
-            'wb_ccrypto_key_public': '',
-            'auth_token_hash': RECEIPT_HASH, # TODO Notice me sempai!!
+            'wb_cckey_prv_penc': '',
+            'wb_cckey_pub': '',
+            'auth_token_hash': RECEIPT_HASH,
         })
 
     def get_dummy_file(self):

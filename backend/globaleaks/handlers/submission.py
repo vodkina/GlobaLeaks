@@ -232,7 +232,7 @@ def serialize_internaltip(store, internaltip, language):
         'answers': db_serialize_questionnaire_answers(store, internaltip),
         'encrypted_answers': internaltip.encrypted_answers,
         'encrypted': internaltip.encrypted,
-        'wb_ccrypto_key_public': internaltip.wb_ccrypto_key_public,
+        'wb_cckey_pub': internaltip.wb_cckey_pub,
         'wb_last_access': datetime_to_ISO8601(internaltip.wb_last_access),
         'wb_access_counter': internaltip.wb_access_counter
     }
@@ -277,7 +277,7 @@ def serialize_whistleblowertip(store, wbtip, language):
 
     ret['files'] = [serialize_internalfile(internalfile) for internalfile in itip.internalfiles]
 
-    ret['wb_ccrypto_key_private'] = wbtip.wb_ccrypto_key_private
+    ret['wb_cckey_prv_penc'] = wbtip.wb_cckey_prv_penc
 
     return ret
 
@@ -412,7 +412,7 @@ def db_create_submission(store, token_id, request, t2w, language):
 
     submission.context_id = context.id
 
-    submission.wb_ccrypto_key_public = request['wb_ccrypto_key_public']
+    submission.wb_cckey_pub = request['wb_cckey_pub']
 
     submission.enable_two_way_comments = context.enable_two_way_comments
     submission.enable_two_way_messages = context.enable_two_way_messages
@@ -456,7 +456,7 @@ def db_create_submission(store, token_id, request, t2w, language):
     wbtip = models.WhistleblowerTip()
     wbtip.id = submission.id
     wbtip.auth_token_hash = request['auth_token_hash']
-    wbtip.wb_ccrypto_key_private = request['wb_ccrypto_key_private']
+    wbtip.wb_cckey_prv_penc = request['wb_cckey_prv_penc']
     store.add(wbtip)
 
     rtips_count = create_receivertips(store, submission, request['receivers'])

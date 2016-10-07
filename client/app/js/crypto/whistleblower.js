@@ -63,8 +63,8 @@ angular.module('GLBrowserCrypto')
           self.storePassphrase(result.passphrase);
           self.unlock();
 
-          submission.wb_ccrypto_key_private = armored_priv_key;
-          submission.wb_ccrypto_key_public = keys.ccrypto_key_public.armor();
+          submission.wb_cckey_prv_penc = armored_priv_key;
+          submission.wb_cckey_pub = keys.ccrypto_key_public.armor();
 
           variables.keyDerived = true;
         });
