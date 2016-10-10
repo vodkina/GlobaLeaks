@@ -184,8 +184,10 @@ angular.module('GLBrowserCrypto', [])
     }
   };
 }])
-.factory('glbcKeyLib', ['$q', 'pgp', 'glbcUtil', function($q, pgp, glbcUtil) {
-    var ccrypto_key_bits = 2048;
+.constant('glbcConstants', {
+  ccrypto_key_bits: 2048,
+})
+.factory('glbcKeyLib', ['$q', 'pgp', 'glbcConstants', 'glbcUtil', function($q, pgp, glbcConstants, glbcUtil) {
 
     return {
       scrypt: function(data, salt, logN, dkLen) {
@@ -238,7 +240,7 @@ angular.module('GLBrowserCrypto', [])
         var key_options = {
           userIds: [{ name:'Random User', email:'randomuser@globaleaks.org' }],
           passphrase: passphrase,
-          numBits: ccrypto_key_bits
+          numBits: glbcConstants.ccrypto_key_bits
         };
 
         pgp.generateKey(key_options).then(function(keyPair) {
@@ -250,6 +252,7 @@ angular.module('GLBrowserCrypto', [])
 
         return deferred.promise;
       },
+
 
       /**
        * @return {String} the 16 digit keycode used by whistleblowers in the
@@ -409,6 +412,7 @@ angular.module('GLBrowserCrypto', [])
       var pubKeys = [glbcKeyRing.getPubKey(uuid),
                      glbcKeyRing.getPubKey('private')];
 
+      // TODO(bugfix) params passed here are incorrect.
       var options = {
         data: m,
         format: 'utf8',

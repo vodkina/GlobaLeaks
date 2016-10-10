@@ -380,11 +380,11 @@ def create_receivertips(store, submission, receiver_id_list):
 
 
 def db_create_submission(store, token_id, request, t2w, language):
-    # the .get method raise an exception if the token is invalid
+    # the .get method raises an exception if the token is invalid
     token = TokenList.get(token_id)
-
     token.use()
 
+    # NOTE answers is still coming over the wire.
     answers = request['answers']
 
     context = store.find(models.Context, models.Context.id == request['context_id']).one()
@@ -400,10 +400,7 @@ def db_create_submission(store, token_id, request, t2w, language):
 
     submission.expiration_date = utc_future_date(days=context.tip_timetolive)
 
-    # this is get from the client as it the only possibility possible
-    # that would fit with the end to end submission.
-    # the score is only an indicator and not a critical information so we can accept to
-    # be fooled by the malicious user.
+    # NOTE The score reported by the client is trusted without validation.
     submission.total_score = request['total_score']
 
     # The use of Tor2Web is detected by the basehandler and the status forwared  here;
@@ -412,7 +409,10 @@ def db_create_submission(store, token_id, request, t2w, language):
 
     submission.context_id = context.id
 
+    # Store the relevant key material for the internaltip
     submission.wb_cckey_pub = request['wb_cckey_pub']
+    submission.sess_cckey_pub = request['sess_cckey_pub']
+    submission.sess_cckey_prv_enc = request['sess_cckey_prv_enc']
 
     submission.enable_two_way_comments = context.enable_two_way_comments
     submission.enable_two_way_messages = context.enable_two_way_messages
@@ -436,7 +436,7 @@ def db_create_submission(store, token_id, request, t2w, language):
 
         db_save_questionnaire_answers(store, submission.id, answers)
     except Exception as excep:
-        log.err("Submission create: fields validation fail: %s" % excep)
+        log.err("db_create_submission: fields validation failed: %s" % excep)
         raise excep
 
     for filedesc in token.uploaded_files:
@@ -453,15 +453,15 @@ def db_create_submission(store, token_id, request, t2w, language):
         log.debug("=> file associated %s|%s (%d bytes)" %
                   (new_file.name, new_file.content_type, new_file.size))
 
+    rtips_count = create_receivertips(store, submission, request['receivers'])
+    log.debug("Finalized submission. Created %d ReceiverTips" % rtips_count)
+
+    # Store the information only ever shown to the whistleblower
     wbtip = models.WhistleblowerTip()
     wbtip.id = submission.id
     wbtip.auth_token_hash = request['auth_token_hash']
     wbtip.wb_cckey_prv_penc = request['wb_cckey_prv_penc']
     store.add(wbtip)
-
-    rtips_count = create_receivertips(store, submission, request['receivers'])
-
-    log.debug("Finalized submission creating %d ReceiverTip(s)" % rtips_count)
 
     return serialize_whistleblowertip(store, wbtip, language)
 

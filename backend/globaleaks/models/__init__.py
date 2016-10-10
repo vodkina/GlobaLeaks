@@ -295,12 +295,12 @@ class InternalTip(Model):
     enable_attachments = Bool(default=True)
     enable_whistleblower_identity = Bool(default=False)
 
-    wb_cckey_public = Unicode(default=u'')
+    wb_cckey_pub = Unicode(default=u'')
     wb_last_access = DateTime(default_factory=datetime_now)
     wb_access_counter = Int(default=0)
 
-    sess_ccrypto_key_public = Unicode(default=u'')
-    sess_ccrypto_key_private = Unicode(default=u'')
+    sess_cckey_pub = Unicode(default=u'')
+    sess_cckey_prv_enc = Unicode(default=u'')
 
     new = Int(default=True)
 
@@ -310,7 +310,7 @@ class WhistleblowerTip(Model):
     Whistleblower interface to submissions.
     """
     auth_token_hash = Unicode(default=u'')
-    wb_cckey_private = Unicode(default=u'')
+    wb_cckey_prv_penc = Unicode(default=u'')
 
 
 class ReceiverTip(Model):

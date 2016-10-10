@@ -424,8 +424,10 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
           }
         });
 
+        var rec_ids = [];
         self.receivers.forEach(function(rec) {
           glbcKeyRing.addPubKey(rec.id, rec.cckey_pub);
+          rec_ids.push(rec.id);
         });
 
         var keycode = glbcKeyLib.generateKeycode();
@@ -433,8 +435,14 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
 
         glbcWhistleblower.deriveKey(keycode, $rootScope.node.receipt_salt, self._submission)
         .then(function() {
+          // TODO(desimplify) All receivers can decrypt sess_cckey_prv_enc
+          return glbcWhistleblower.deriveSessionKey(rec_ids, self._submission);
+        })
+        .then(function() {
           self.keyDerived = true;
           loadingModal.hide();
+        }, function(e) {
+            console.log('threw an error!', e);
         });
       };
 
@@ -486,7 +494,7 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
 
 
         // Encrypt the payload then call submission update to send the xhr request.
-        glbcWhistleblower.encryptAndSignAnswers(jsonAnswers, self._submission.receivers)
+        glbcWhistleblower.encryptAndSignAnswers(jsonAnswers)
         .then(function(ciphertext) {
           self._submission.encrypted_answers = ciphertext;
           self._submission.$update(function(result) {
