@@ -461,7 +461,7 @@ angular.module('GLBrowserCrypto', [])
 
           var options = {
             message: c,
-            privateKey: glbcKeyRing.getKey(),
+            privateKey: glbcKeyRing.getSessionKey(), // TODO split usage based on message type
             format: 'utf8',
           };
 
@@ -506,6 +506,8 @@ angular.module('GLBrowserCrypto', [])
      * @return {Promise<String>}
      **/
     encryptAndSignComment: function(msg, receivers, sign) {
+      //TODO(encrypt) replace with session key usage
+
       var pubKeys = receivers.map(function(rec) {
         return glbcKeyRing.getPubKey(rec.id);
       });
@@ -542,6 +544,7 @@ angular.module('GLBrowserCrypto', [])
       var options = {
         message: message,
         format: 'utf8',
+        // TODO split receiver and WB actions
         privateKey: glbcKeyRing.getKey(),
       };
 
@@ -568,6 +571,8 @@ angular.module('GLBrowserCrypto', [])
     return {
       privateKey: null,
       publicKeys: {}, // map of uuids to pgp.Key objects
+      privateSessionKey: null, // the current tip's session key.
+      publicSessionKey: null,
       _pubKey: null,
       _passphrase: null,
     };
@@ -594,6 +599,15 @@ angular.module('GLBrowserCrypto', [])
         return keyRing.publicKeys[s];
       }
       throw new Error('Key not found in keyring. ' + s);
+    },
+
+    // TODO(improve/document) getters/setters here needs some thought
+    setSessionKey: function(key) {
+      keyRing.privateSessionKey = key;
+    },
+
+    getSessionKey: function() {
+      return keyRing.privateSessionKey;
     },
 
     /**

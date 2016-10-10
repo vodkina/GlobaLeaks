@@ -577,16 +577,17 @@ factory("Access", ["$q", "Authentication", function ($q, Authentication) {
 
         tip.iars = tip.identity_provided ? RTipIdentityAccessRequestResource.query(tipID) : [];
 
-        $q.all([tip.receivers.$promise, comments.$promise, messages.$promise, tip.iars.$promise]).then(function() {
+        glbcReceiver.unlock();
+        var keyLoadPromise = glbcReceiver.loadSessionKey(tip.sess_cckey_prv_enc);
+
+        $q.all([tip.receivers.$promise, comments.$promise, messages.$promise, tip.iars.$promise, keyLoadPromise]).then(function() {
+          glbcReceiver.lock();
           tip.iars = $filter('orderBy')(tip.iars, 'request_date');
           tip.last_iar = tip.iars.length > 0 ? tip.iars[tip.iars.length - 1] : null;
 
           //TODO handle tip.encrypted flag all in one.
           if (tip.encrypted) {
             glbcKeyRing.addPubKey('whistleblower', tip.wb_cckey_pub);
-            angular.forEach(tip.receivers, function(receiver) {
-              glbcKeyRing.addPubKey(receiver.id, receiver.cckey_pub);
-            });
           }
 
           glbcReceiver.unlock();

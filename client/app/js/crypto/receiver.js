@@ -15,6 +15,45 @@ angular.module('GLBrowserCrypto')
       return glbcKeyRing.lockKeyRing(passphrase);
     },
 
+    loadSessionKey: function(sess_cckey_prv_enc) {
+      var options = {
+        message: pgp.message.readArmored(sess_cckey_prv_enc),
+        format: 'binary',
+        privateKey: glbcKeyRing.getKey(),
+      };
+
+      var p = pgp.decrypt(options).then(function(res) {
+        var packetlist = new pgp.packet.List();
+        packetlist.read(res.data);
+
+        var keyIndex = packetlist.indexOfTag(pgp.enums.packet.secretKey,
+                                             pgp.enums.packet.userid,
+                                             pgp.enums.packet.signature,
+                                             pgp.enums.packet.secretSubkey,
+                                             pgp.enums.packet.signature);
+
+        // assert that the key is in the right format
+        if (keyIndex.length !== 5) {
+          throw "Passed pgp session key is in the wrong format";
+        }
+
+        for (var i = 0; i < keyIndex.length; i++) {
+          if (keyIndex[i] !== i) {
+            throw "Key elements are out of order"; // Throw because something funky is going on.
+          }
+        }
+
+        tip_session_key = new pgp.key.Key(packetlist);
+        glbcKeyRing.setSessionKey(tip_session_key);
+      }).catch(function(e) {
+        // TODO(handle-me) exceptions thrown in the then are dropped here.
+        console.log(e);
+        throw e;
+      });
+
+      return p;
+    },
+
     clear: function() {
       passphrase = null;
       glbcKeyRing.clear();
@@ -30,7 +69,7 @@ angular.module('GLBrowserCrypto')
       glbcCipherLib.createArrayFromBlob(inputBlob).then(function(ciphertext) {
         var options = {
           message: pgp.message.read(ciphertext),
-          privateKey: glbcKeyRing.getKey(),
+          privateKey: glbcKeyRing.getSessionKey(),
           format: 'binary',
         };
 

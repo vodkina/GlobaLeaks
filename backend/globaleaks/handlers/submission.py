@@ -234,7 +234,8 @@ def serialize_internaltip(store, internaltip, language):
         'encrypted': internaltip.encrypted,
         'wb_cckey_pub': internaltip.wb_cckey_pub,
         'wb_last_access': datetime_to_ISO8601(internaltip.wb_last_access),
-        'wb_access_counter': internaltip.wb_access_counter
+        'wb_access_counter': internaltip.wb_access_counter,
+        'sess_cckey_prv_enc': internaltip.sess_cckey_prv_enc,
     }
 
 
@@ -292,6 +293,7 @@ def serialize_receivertip(store, rtip, language):
     ret['last_access'] = datetime_to_ISO8601(rtip.last_access)
     ret['access_counter'] = rtip.access_counter
     ret['enable_notifications'] = rtip.enable_notifications
+    ret['sess_cckey_prv_enc'] = rtip.internaltip.sess_cckey_prv_enc
 
     return ret
 
