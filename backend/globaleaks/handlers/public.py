@@ -286,6 +286,5 @@ class PublicResource(BaseHandler):
         """
         Get all the public resources.
         """
-        ret = yield GLApiCache.get('public', self.request.language,
-                                   get_public_resources, self.request.language)
+        ret = yield get_public_resources(self.request.language)
         self.write(ret)
