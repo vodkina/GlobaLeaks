@@ -73,7 +73,7 @@ fi
 BUILDSRC="GLRelease"
 [ -d $BUILDSRC ] && rm -rf $BUILDSRC
 mkdir $BUILDSRC && cd $BUILDSRC
-git clone https://github.com/globaleaks/GlobaLeaks.git
+git clone --branch="$TAG" --depth=1 https://github.com/globaleaks/GlobaLeaks.git
 cd GlobaLeaks
 git checkout $TAG
 cd client
