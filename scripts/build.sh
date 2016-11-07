@@ -24,7 +24,7 @@ FAST_BUILD=0
 NOSIGN=0
 PUSH=0
 
-while getopts "d:t:np:h:g" opt; do
+while getopts "d:t:np:h:f" opt; do
   case $opt in
     d) DISTRIBUTION="$OPTARG"
     ;;
@@ -34,7 +34,7 @@ while getopts "d:t:np:h:g" opt; do
     ;;
     p) PUSH=1
     ;;
-    g) FAST_BUILD=1
+    f) FAST_BUILD=1
     ;;
     h)
         usage
