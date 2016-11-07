@@ -31,10 +31,12 @@ if which lsb_release >/dev/null; then
   DISTRO_CODENAME="$( lsb_release -cs )"
 fi
 
-if [ $DISTRO_CODENAME != "trusty" ]; then
+if echo "$DISTRO_CODENAME" | grep -vqE "^(trusty|xenial)$" ; then
   echo "!!!!!!!!!!!! WARNING !!!!!!!!!!!!"
   echo "You are attempting to install GlobaLeaks on an unsupported platform."
-  echo "Supported platform is Ubuntu Trusty (14.04)"
+  echo "Supported platforms are:"
+  echo "  -  Ubuntu Trusty (14.04)"
+  echo "  -  Ubuntu Xenial (16.04)"
 
   while true; do
     read -p "Do you wish to continue anyhow? [y|n]?" yn
@@ -130,6 +132,7 @@ if [ $DISTRO == "Ubuntu" ]; then
 fi
 
 if [ -d /data/globaleaks/deb ]; then
+  echo "Installing from locally provided debian package"
   cd /data/globaleaks/deb/ && dpkg-scanpackages . /dev/null | gzip -c -9 > /data/globaleaks/deb/Packages.gz
   echo "deb file:///data/globaleaks/deb/ /" >> /etc/apt/sources.list
   DO "apt-get update -y"
