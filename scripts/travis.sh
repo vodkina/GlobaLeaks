@@ -31,11 +31,14 @@ setupBackendDependencies() {
   pip install -r requirements.txt
   pip install coverage coveralls
   echo "Setup backend dependencies"
-  LOG "which globaleaks || echo 0"
+  set +e
+  LOG "which python"
+  LOG "which globaleaks"
   LOG "pwd"
   LOG "ls -alH"
   LOG "echo $PYTHON_PATH"
   LOG "pip freeze"
+  set -e
 }
 
 setupDependencies() {
