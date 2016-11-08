@@ -58,6 +58,7 @@ echo "Performing GlobaLeaks installation on $DISTRO - $DISTRO_CODENAME"
 # or trusty as fallback.
 if [ $DISTRO_CODENAME != "precise" ] &&
    [ $DISTRO_CODENAME != "trusty" ] &&
+   [ $DISTRO_CODENAME != "xenial" ] &&
    [ $DISTRO_CODENAME != "wheezy" ] &&
    [ $DISTRO_CODENAME != "jessie" ]; then
   # In case of unsupported platforms we fallback on Trusty

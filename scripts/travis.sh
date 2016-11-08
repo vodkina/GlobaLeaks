@@ -18,12 +18,24 @@ setupClientDependencies() {
   fi
 }
 
+LOG () {
+  CMD=$1
+  echo -n "Running: \"$CMD\"... "
+  $CMD
+}
+
 setupBackendDependencies() {
   cd $TRAVIS_BUILD_DIR/backend  # to install backend dependencies
   rm -rf requirements.txt
   ln -s requirements/requirements-${GLREQUIREMENTS}.txt requirements.txt
   pip install -r requirements.txt
   pip install coverage coveralls
+  echo "Setup backend dependencies"
+  LOG "which globaleaks || echo 0"
+  LOG "pwd"
+  LOG "ls -alH"
+  LOG "echo $PYTHON_PATH"
+  LOG "pip freeze"
 }
 
 setupDependencies() {
