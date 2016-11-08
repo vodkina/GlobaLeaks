@@ -33,11 +33,11 @@ setupBackendDependencies() {
   echo "Setup backend dependencies"
   set +e
   LOG "which python"
-  LOG "which globaleaks"
   LOG "pwd"
   LOG "ls -alH"
+  LOG "ls -alH globaleaks"
   LOG "echo $PYTHONPATH"
-  LOG "python -e 'import globaleaks' "
+  LOG "python -c 'import cryptography as c; print c.__version__; import globaleaks as g; print g.__version__'"
   LOG "pip freeze"
   set -e
 }
