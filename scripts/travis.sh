@@ -37,7 +37,7 @@ setupBackendDependencies() {
   LOG "ls -alH"
   LOG "ls -alH globaleaks"
   LOG "echo $PYTHONPATH"
-  LOG "python -c 'import cryptography as c; print c.__version__; import globaleaks as g; print g.__version__'"
+  LOG "python -c \"import cryptography as c; print c.__version__; import globaleaks as g; print g.__version__\""
   LOG "pip freeze"
   set -e
 }
