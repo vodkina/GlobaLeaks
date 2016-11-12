@@ -9,7 +9,7 @@ import platform
 import sys 
 
 # Use UTF-8 for all string <-> unicode conversions in the program
-sys.reload(sys)
+reload(sys)
 sys.setdefaultencoding('utf8')
 
 sys.excepthook = None
