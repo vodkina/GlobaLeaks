@@ -8,7 +8,7 @@ from datetime import timedelta
 from storm.locals import Bool, Int, Reference, ReferenceSet, Unicode, Storm, JSON
 
 from globaleaks.models.validators import shorttext_v, longtext_v, \
-    shortlocal_v, longlocal_v, shorturl_v, longurl_v, natnum_v
+    shortlocal_v, longlocal_v, shorturl_v, longurl_v, natnum_v, range_v
 from globaleaks.orm import transact
 from globaleaks.settings import GLSettings
 from globaleaks.utils.utility import datetime_now, datetime_null, uuid4
@@ -201,7 +201,7 @@ class Context(ModelWithID):
     enable_two_way_messages = Bool(default=True)
     enable_attachments = Bool(default=True)
 
-    tip_timetolive = Int(default=15)
+    tip_timetolive = Int(validator=range_v(-1, 5*365), default=15) # in days, -1 indicates no expiration
 
     # localized strings
     name = JSON(validator=shortlocal_v)
