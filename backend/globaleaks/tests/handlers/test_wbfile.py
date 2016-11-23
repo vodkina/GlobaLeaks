@@ -23,6 +23,7 @@ class TestWhistleblowerFileWorkFlow(helpers.TestHandlerWithPopulatedDB):
         for wbtip_desc in wbtips_desc:
             wbfiles_desc = yield self.get_wbfiles(wbtip_desc['id'])
             for wbfile_desc in wbfiles_desc:
+                # whistleblower file download
                 handler = self.request(role='whistleblower', user_id = wbtip_desc['id'])
                 yield handler.get(wbfile_desc['id'])
 
@@ -37,19 +38,15 @@ class TestWhistleblowerFileWorkFlow(helpers.TestHandlerWithPopulatedDB):
                 self.assertEqual(wbfile_desc['description'], 'description')
 
                 handler = self.request(role='receiver', user_id = rtip_desc['receiver_id'])
+
+                # receiver file download
+                yield handler.get(wbfile_desc['id'])
+
+                # receiver file deletion
                 yield handler.delete(wbfile_desc['id'])
                 deleted_wbfiles_ids.append(wbfile_desc['id'])
 
+        # check the file are affectively not there anymore
         rtips_desc = yield self.get_rtips()
         for rtip_desc in rtips_desc:
             self.assertEqual(len(rtip_desc['wbfiles']), 0)
-
-      #@inlineCallbacks
-    def test_delete(self):
-        #TODO
-         pass
-
-     #@inlineCallbacks
-    def test_system_delete(self):
-        #TODO
-        pass

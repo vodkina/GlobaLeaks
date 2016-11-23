@@ -594,7 +594,6 @@ class WhistleblowerFileInstanceHandler(BaseHandler):
 
 
 class RTipWBFileInstanceHandler(WhistleblowerFileInstanceHandler):
-
     def user_can_access(self, wbfile):
         r_ids = [rtip.receiver_id for rtip in wbfile.receivertip.internaltip.receivertips]
         return self.current_user.user_id in r_ids
