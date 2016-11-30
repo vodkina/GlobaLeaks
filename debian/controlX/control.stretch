@@ -25,17 +25,6 @@ Depends:
  , haveged
  , iptables
  , python (>=2.7)
- , python-cryptography
- , python-cyclone
- , python-gnupg
- , python-openssl
- , python-scrypt
- , python-storm
- , python-transaction
- , python-twisted-core,
- , python-zope.component
- , python-zope.event
- , python-zope.interface
  , ${python:Depends}
 Recommends:
  ${misc:Recommends}
